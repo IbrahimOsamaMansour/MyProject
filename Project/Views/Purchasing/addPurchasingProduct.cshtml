@@ -1,0 +1,171 @@
+﻿@model ProductPurchasingViewModel
+@{
+    ViewData["Title"] = "addPurchasingProduct";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="col-md-12 col-sm-12 ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Form Design </h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+										</li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+
+
+								<div class="x_content">
+									<br /> 
+									@if(ViewBag.suc != null){<h4 class="alert alert-success">Insert Purchasing is Done Successfull  </h4>}
+									@if(ViewBag.fail  != null){<h4 class="alert alert-danger">Sorry Insert Purchasing is Fail! </h4>}
+
+
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					<ul class="wizard_steps">
+						<li>
+							<a href="#step-1" class="done">
+								<span class="step_no">1</span>
+								<span class="step_descr">
+									Step 1<br />
+									<small>Data of prchasing </small>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#step-2" class="done">
+								<span class="step_no">2</span>
+								<span class="step_descr">
+									Step 2<br />
+									<small>Quantity of purchasing</small>
+								</span>
+							</a>
+						</li>
+						<li>
+							@if (Model.product_purchasing == null)
+							{
+								<a href="#step-3" class="selected">
+									<span class="step_no">3</span>
+								<span class="step_descr">
+									Step 3<br />
+									<small>Finshed</small>
+								</span>
+							</a>
+							}else{
+								<a href="#step-3" class="done">
+									<span class="step_no">3</span>
+									<span class="step_descr">
+										Step 3<br />
+										<small>Finshed</small>
+									</span>
+								</a>
+							}
+						</li>
+					</ul>
+					@if(Model.purchasing != null){
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>company</th>
+										<th>category </th>
+										<th>sub category</th>
+										<th>Model Name</th>
+										<th>Bill Number </th>
+										<th>total price</th>
+										<th>description</th>
+										<th>date sell</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										@if(Model.purchasing.Company != null){<td>@Model.purchasing.Company.Name</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.category != null){<td>@Model.purchasing.category.Name</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.subcategory != null){<td>@Model.purchasing.subcategory.Name</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.ModelName != null){<td>@Model.purchasing.ModelName</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.BillNum != null){<td>@Model.purchasing.BillNum</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.TotalPrice != null){<td>@Model.purchasing.TotalPrice</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.Description != null){<td>@Model.purchasing.Description</td>}
+										else{<td>----</td>}
+										@if(Model.purchasing.DateSell != null){<td>@Model.purchasing.DateSell</td>}
+										else{<td>----</td>}
+										
+									</tr>									
+								</tbody>
+							</table>
+							@if (Model.purchasing.Purchasing_Quantities.Count != 0) 
+							{ 
+								<table class="table table-bordered col-6">
+								<thead>
+									<tr>
+										<th>Quantity </th>
+										<th>unit </th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model.purchasing.Purchasing_Quantities)
+									{
+										<tr>
+										@if(item.ValueQuantity != null ){<td>@item.ValueQuantity</td> <td>@item.UnitQuantity</td>}
+										else{<td>----</td>}										
+										
+									</tr>
+									}
+																		
+								</tbody>
+							</table>
+							}
+
+					}@*addPurchasingProduct*@
+
+					@if(Model.product_purchasing == null){
+					<form asp-action="addPurchasingProduct" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+										<input asp-for="Purchasing_Id" hidden />
+
+										<div class="ln_solid"></div>
+										<div class="item form-group">
+											<div class="col-md-6 col-sm-6 offset-md-3">
+												<button type="submit" class="btn btn-success">Add To Product</button>
+											</div>
+										</div>
+
+									</form>
+					}else{
+						<h4 class="alert alert-success"> You already add this Purchasing in product befoe to see product press <a asp-action="Index" asp-controller="Product">Here</a></h4>
+					}
+					<div class="ln_solid"></div>
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="addQuantity" asp-route-id="@Model.Purchasing_Id" class="btn btn-success"><i class="fa fa-hand-o-left"></i> Back</a>
+						</div>
+					</div>
+							<div class="item form-group"  style="float: right">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+								<a asp-action="index" class="btn btn-success ">Back to Purchasing <i class="fa fa-hand-o-left"></i></a>
+								</div>
+							</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+

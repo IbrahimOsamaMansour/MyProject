@@ -1,0 +1,292 @@
+﻿@model List<Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    int x = 1;
+}
+<br />
+
+<h1 style="font-weight:bolder ; color:#2a3f54">SubCategories</h1>
+<br />
+
+
+
+@if (TempData["Added"] != null)
+{
+     <h3 class="alert alert-success">@TempData["Added"]</h3>
+}
+@if (TempData["Edit"] != null)
+{
+     <h3 class="alert alert-success">@TempData["Edit"]</h3>
+}
+@if (TempData["Delete"] != null)
+{
+     <h3 class="alert alert-success">@TempData["Delete"]</h3>
+}
+@if (TempData["subNotExist"] != null)
+{
+     <h3 class="alert alert-info">@TempData["subNotExist"]</h3>
+}
+@if (TempData["proudcthasSubCategory"] != null)
+{
+     <h3 class="alert alert-info">@TempData["proudcthasSubCategory"]</h3>
+}
+@if (TempData["purchashasSubCategory"] != null)
+{
+     <h3 class="alert alert-info">@TempData["purchashasSubCategory"]</h3>
+}
+
+
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+        <div class="x_title">
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+               
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="row">
+                <h3 class="col-7">
+                    <a asp-action="Create" class="btn btn-info">Add SubCategory </a>
+                </h3>
+                <div class="col-4 " style="padding-top: 10px">
+                    <p class="row">
+                        <select onchange="categchang()" id="CategoryId" asp-items="ViewBag.categories" class="form-control "></select>
+                    </p>
+                </div>
+              
+            </div>
+            <div id="divsubcateg">
+              
+                                <table id="datatable" class="table table-hover  table-striped   " role="grid" aria-describedby="datatable_info">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+
+                                    @(x++)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SubCategory.Name)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" class="btn btn-outline-success" asp-route-id="@item.Id">Edit</a> 
+
+                                    <a asp-action="Details" class="btn btn-outline-info" asp-route-id="@item.Id">Details</a> 
+
+                                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.Id" onclick="return DeleteItem()">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+
+
+          
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+
+
+
+
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>All SubCategoties</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content" style="display: block;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box table-responsive">
+                    <div class="col-8 m-auto">
+                       
+                        <a asp-action="Create" class="btn btn-primary">Create New</a>
+
+
+
+                        <p class="row">
+                            <select onchange="categchang()" id="CategoryId" asp-items="ViewBag.categories" class="form-control col-7"></select>
+                        </p>
+
+                    </div>
+                    <div id="datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                        <div class="row">
+                            <div id="divsubcateg" class="col-sm-12">
+                               @if(TempData["Added"] != null){ <h3 class="alert alert-success">@TempData["Added"]</h3>}
+                               @if(TempData["Edit"] != null){ <h3 class="alert alert-success" >@TempData["Edit"]</h3>}
+                               @if(TempData["Delete"] != null){ <h3 class="alert alert-success">@TempData["Delete"]</h3>}
+                               @if(TempData["subNotExist"] != null){ <h3 class="alert alert-info">@TempData["subNotExist"]</h3>}
+                               @if(TempData["proudcthasSubCategory"] != null){ <h3 class="alert alert-info">@TempData["proudcthasSubCategory"]</h3>}
+                               @if(TempData["purchashasSubCategory"] != null){ <h3 class="alert alert-info">@TempData["purchashasSubCategory"]</h3>}
+                                
+                               
+                               <table id="datatable" class="table table-striped table-bordered dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 148px;">Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 233px;">Category</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 90px;"></th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 90px;"></th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" style="width: 90px;"></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.SubCategory.Name)
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Edit" class="btn btn-success" asp-route-id="@item.Id">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a>
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id" onclick="return DeleteItem()">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <div class="dataTables_info" id="datatable_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="datatable_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button previous disabled" id="datatable_previous">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="0" tabindex="0">Previous</a>
+                                        </li>
+                                        <li class="paginate_button active">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="1" tabindex="0">1</a>
+                                        </li>
+                                        <li class="paginate_button ">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="2" tabindex="0">2</a>
+                                        </li>
+                                        <li class="paginate_button ">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="3" tabindex="0">3</a>
+                                        </li>
+                                        <li class="paginate_button">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="4" tabindex="0">4</a>
+                                        </li>
+                                        <li class="paginate_button ">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="5" tabindex="0">5</a>
+                                        </li>
+                                        <li class="paginate_button ">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="6" tabindex="0">6</a>
+                                        </li>
+                                        <li class="paginate_button next" id="datatable_next">
+                                            <a href="#" aria-controls="datatable" data-dt-idx="7" tabindex="0">Next</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@section Categ_Change{
+    <script type ="text/javascript">
+       
+        function categchang() {
+
+            var categoryselect = document.getElementById("CategoryId");
+            var divsubcateg = document.getElementById("divsubcateg");
+
+            console.log(categoryselect.value);
+            $.ajax({
+                url: "http://localhost:5233/SubCategory/Filter/" + categoryselect.value,
+                method: "post",
+                success: function (result) {
+                    console.log(result);
+                    divsubcateg.innerHTML = result;
+                }
+            });
+        }
+        function DeleteItem() {
+			if (confirm("Are you sure you want to delete ...?")) {
+				return true;
+			}
+			return false;
+		}
+    </script>
+
+    @*<script>
+
+        var stdInput = document.getElementById("stdId");
+        var crsarea = document.getElementById("CrsList");
+
+        var firstReqResult;
+        var secondReqResult;
+        stdInput.addEventListener("change", async function () {
+            firstReqResult = await fetch("http://localhost:5020/PartialView/EditSelectCourse/" + stdInput.value)
+            var data = await firstReqResult.text();
+            console.log(data);
+            crsarea.innerHTML = data;
+    </script>*@
+}

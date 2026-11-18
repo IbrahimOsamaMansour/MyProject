@@ -1,0 +1,202 @@
+﻿@model PurchasingQuantityViewModel
+@{
+    ViewData["Title"] = "addQuantity";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+
+	SelectList quantitynits = new SelectList(Model.units);
+	var x=0;
+}
+
+
+<h1> Quantity</h1>
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Form Design </h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div class="x_content">
+				<br />
+				@if (TempData["suc"] != null){	<h4 class="alert alert-success">Add quantity to product  is Done Successfull  </h4>	}
+				@if (TempData["fail"] != null){	<h4 class="alert alert-danger">@TempData["fail"]</h4>				}
+
+
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					<ul class="wizard_steps">
+						<li>
+							<a href="#" class="done">
+								<span class="step_no">1</span>
+								<span class="step_descr">
+									Step 1<br />
+									<small>Data of Product </small>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="#" class="selected">
+								<span class="step_no">2</span>
+								<span class="step_descr">
+									Step 2<br />
+									<small>Quantity of Product</small>
+								</span>
+							</a>
+						</li>
+					</ul>
+					@if (Model.Product != null)
+					{
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>company</th>
+									<th>category </th>
+									<th>sub category</th>
+									<th>Model Name</th>
+									<th>description</th>
+									<th>Quantity Reserved</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>@{++x;}</th>
+									@if (Model.Product.company != null){<td>@Model.Product.company.Name</td>}
+									else{<td>----</td>}
+									@if (Model.Product.category != null){<td>@Model.Product.category.Name</td>}
+									else									{<td>----</td>}
+									@if (Model.Product.subcategory != null)
+									{<td>@Model.Product.subcategory.Name</td>}
+									else{<td>----</td>}
+									@if (Model.Product.ModelName != null){<td>@Model.Product.ModelName</td>	}
+									else{<td>----</td>}										
+									@if (Model.Product.Description != null){<td>@Model.Product.Description</td>}
+									else{<td>----</td>}
+									@if (Model.Product.ReservedQuantity != null){<td>@Model.Product.ReservedQuantity</td>}
+									else{<td>----</td>}
+								</tr>
+							</tbody>
+						</table>
+						@if (Model.Product.Product_Quantities.Count != 0)
+						{
+							<table class="table table-bordered col-6">
+								<thead>
+									<tr>
+										<th>Quantity </th>
+										<th>unit </th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model.Product.Product_Quantities)
+									{
+										<tr>
+											@if (item.ValueQuantity != null)
+											{
+												<td>@item.ValueQuantity</td>
+												<td>@item.UnitQuantity</td>
+											}
+											else
+											{
+												<td>----</td>
+											}
+
+										</tr>
+									}
+
+								</tbody>
+							</table>
+						}
+
+					}
+
+					<form asp-action="addQuantity" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+						<input asp-for="Product_id" hidden />
+						@if(TempData["Qua"] != null){<p style="color:red">@TempData["Qua"]</p>}
+						
+						<div class="item form-group">
+							<label asp-for="ValueQuantity" class="col-form-label col-md-3 col-sm-3 label-align" for="ValueQuantity">Quantity
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="ValueQuantity" placeholder="00" required="required" value="null" class="form-control">
+								@if (TempData["valQua"] != null)
+								{
+									<p style="color:red">@TempData["valQua"]</p>
+								}
+								<span style="color:red" asp-validation-for="ValueQuantity"></span>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="UnitQuantity"> Unit Quantity
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (quantitynits.Count() == 0)
+								{
+									<select class="form-control" id="UnitQuantity">
+										<option value="null">No Unite quantity </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="UnitQuantity" asp-items="quantitynits">
+										<option value="null"> -- choose unite -- </option>
+
+									</select>
+								}<span style="color:red" asp-validation-for="UnitQuantity"></span>
+							</div>
+						</div>
+
+
+
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="col-md-6 col-sm-6 offset-md-3">
+								<button type="submit" class="btn btn-success">Add Quanttiy</button>
+							</div>
+						</div>
+
+					</form>
+
+					<div class="ln_solid"></div>
+					
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="add" class="btn btn-success"> <i class="fa fa-hand-o-left"></i>Add Product </a>
+						</div>
+					</div>
+					<br />
+					<br />
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Detail" asp-route-id="@Model.Product_id" class="btn btn-success ">Back to Detail <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+					<div class="item form-group" style="float: right">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Index" class="btn btn-success ">Back to Products <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+

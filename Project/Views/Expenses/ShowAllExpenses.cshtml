@@ -1,0 +1,258 @@
+﻿@model List<Expenses>
+@{
+    ViewData["Title"] = "ShowAllExpenses";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<h1 style="font-weight:bolder ; color:#2a3f54"> Expenses</h1>
+<br />
+
+@if (TempData["Added"] != null)
+{
+    <h3 class="alert alert-success">@TempData["Added"]</h3>
+}
+@if (TempData["Delete"] != null)
+{
+    <h3 class="alert alert-success">@TempData["Delete"]</h3>
+}
+
+
+@*==============================================*@
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+        <div class="x_title ">
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <h3 class="col-7">
+                    <a class="btn btn-info " asp-action="Create">Create New</a>
+                </h3>
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table table-hover cd-table order-table table-striped">
+                <thead>
+                
+                    <tr role="row">
+                        <th>Item Expencess</th>
+                        <th>Value</th>
+                        <th>Date</th>
+                        <th>Note</th>
+                        <th></th>
+
+                    </tr>
+                
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Itemexpense.Name)
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Value) LE
+                            </td>
+                            <td>
+                                @(item.Expense_Date.ToShortDateString())
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.note)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" class="btn btn-outline-success" asp-route-id="@item.ID">Edit</a>
+
+                                <a asp-action="Details" class="btn btn-outline-dark" asp-route-id="@item.ID">Details</a>
+
+                                <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+<div class="x_panel">
+    <div class="x_title">
+       
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content" style="display: block;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box table-responsive">
+                    <div class="row">
+
+                        <h3 class="col-7"><a asp-action="Create" class="btn btn-primary">Add Expenses</a></h3>
+                        <div class="col-5" style="padding-top: 10px">
+                            <div class="input-group">
+                                <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                <button type="button" class="btn btn-outline-info">search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                        <div class="row">
+                            <div id="divsubcateg" class="col-sm-12">
+
+                                @if(TempData["Added"]!=null){<h3 class="alert alert-success" >@TempData["Added"]</h3>}
+                                @if(TempData["Delete"]!=null){<h3 class="alert alert-success" >@TempData["Delete"]</h3>}
+                                <table id="datatable" class="table table-hover cd-table order-table table-striped" style="width: 100%;" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>Item Expencess</th>
+                                            <th>Value</th>
+                                            <th>Date</th>
+                                            <th>Note</th>
+                                            <th></th>
+                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Itemexpense.Name)
+                                                    
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Value) LE
+                                                </td>
+                                                <td>
+                                                    @(item.Expense_Date.ToShortDateString())
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.note)
+                                                </td>
+                                                <td>
+                                                    <a asp-action="Edit" class="btn btn-outline-success" asp-route-id="@item.ID">Edit</a>|
+
+                                                    <a asp-action="Details" class="btn btn-outline-dark" asp-route-id="@item.ID">Details</a>|
+
+                                                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.ID">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+*@
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+                //console.log(text);
+                var val = input.value.toLowerCase();
+                //console.log(val);
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+
+        })();
+
+        /*console.log(document.readyState);
+          document.addEventListener('readystatechange', function() {
+              if (document.readyState === 'complete') {
+            console.log(document.readyState);
+                  TableFilter.init();
+              }
+          }); */
+
+        TableFilter.init();
+    })();
+
+</script>

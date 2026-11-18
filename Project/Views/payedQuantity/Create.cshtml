@@ -1,0 +1,476 @@
+﻿@model Project.ViewModel.payedQuantityviewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+	double totalpayed = 0.0;
+	double? remainingQ = 0.0;
+}
+<link rel="stylesheet" href="~/css/ProjectStyle.css">
+
+<h1>Payed quantities</h1>
+<hr />
+
+@if (TempData["cantCreatePQ"] != null)
+{
+	<h4 class="alert alert-danger">@TempData["cantCreatePQ"]</h4>
+}
+@if (TempData["createPQ"] != null)
+{
+	<h4 class="alert alert-success ">@TempData["createPQ"]</h4>
+}
+@if (TempData["faildPQ"] != null)
+{
+	<h4 class="alert alert-danger">@TempData["faildPQ"]</h4>
+}
+
+<div class="clearfix"></div>
+<div class="col-md-12 col-sm-12 ">
+	<div class="x_panel">
+	<div class="x_title row">
+			<h3 class="col-11"></h3>
+
+			<div class="col-1  justify-content-end">
+				<ul class="nav navbar-right panel_toolbox @*col-4*@">
+
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+
+			</div>
+			<div class="clearfix "></div>
+		</div>
+
+		<div class="x_content">
+			<h4>Bill Info</h4>
+			@if (Model.bill != null)
+			{
+			<table class="table table-bordered table-hover cd-table order-table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Bill Number</th>
+							<th>Client Name</th>
+							<th>Client Number</th>
+							<th>Bill sell</th>
+							<th>Bill State</th>
+							<th>Date</th>
+							<th>Expire Date</th>
+							<th>Total Price</th>
+							<th>Note</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							@if (Model.bill.Bill_Num != null)
+							{
+								<td>@Model.bill.Bill_Num</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Client_Name != null)
+							{
+								<td>@Model.bill.Client_Name</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Client_phone != null)
+							{
+								<td>@Model.bill.Client_phone</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.sell_State != null)
+							{
+								<td>@Model.bill.sell_State</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Bill_State != null)
+							{
+								<td>@Model.bill.Bill_State</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Date != null)
+							{
+								<td>@Model.bill.Date</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Exp_Date != null)
+							{
+								<td>@Model.bill.Exp_Date</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Total_Price != null)
+							{
+								<td>@Model.bill.Total_Price</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+							@if (Model.bill.Total_Price != null)
+							{
+								<td>@Model.bill.Note</td>
+							}
+							else
+							{
+								<td>----</td>
+							}
+
+						</tr>
+					</tbody>
+				</table>
+
+				@if (Model.payed_Quantities.Count != 0)
+				{
+					<h4> payed Qunatity in Bill </h4>
+					<table class="table table-bordered table-hover cd-table order-table table-striped col-6 m-auto">
+						<thead>
+							<tr>
+								<th> Value </th>
+								<th>Date </th>
+
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (Payed_quantity payeditem in Model.payed_Quantities)
+							{
+								<tr>
+									<td>@payeditem.value</td>
+									<td>@payeditem.Date_Payed</td>
+								</tr>
+
+								@if (payeditem.value != null)
+								{
+
+									totalpayed += payeditem.value;
+								}
+								@if (payeditem.value != null && payeditem.bill.Total_Price != null)
+								{
+									remainingQ = payeditem.bill.Total_Price - totalpayed;
+								}
+							}
+							<tr>
+								<td colspan="4">total payed : @totalpayed </td>
+							
+							</tr>
+							<tr>
+
+								<td colspan="4">total remaining quantity : @remainingQ </td>
+								
+							</tr>
+
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<h4> Sorry! there is no payed Quantities for this bill</h4>
+				}
+
+			}
+
+		</div>
+	</div>
+</div>
+
+
+<div class="clearfix"></div>
+
+<div >
+	<div class="x_panel" style="margin-left:20%; width:60%">
+		<div class="x_title">
+		<h2>Add <span style="color:#17a2b8">Payed Quantity</span> </h2>
+			<ul class="nav navbar-right panel_toolbox">
+				<li>
+					<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+				</li>
+				<li>
+					<a class="close-link"><i class="fa fa-close"></i></a>
+				</li>
+			</ul>
+			<div class="clearfix"></div>
+		</div>
+		<div class="x_content">
+		</div>
+
+		<div >
+			<div>
+				<form asp-action="Create" method="post">
+					@* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+					<input asp-for="Bill_ID" class="form-control" hidden />
+					<div class="form-group">
+						<label asp-for="value" class="control-label"> Payed Value</label>
+						<input asp-for="value" class="form-control" />
+						<span asp-validation-for="value" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Date_Payed" class="control-label"> Date of Payed</label>
+						<input asp-for="Date_Payed" class="form-control" />
+						<span asp-validation-for="Date_Payed" class="text-danger"></span>
+					</div>
+					<div>
+						@if (totalpayed >= Model.bill.Total_Price)
+						{
+							<input type="submit" value="Create" class="btn btn-primary" disabled />
+						}
+						else
+						{
+							<input type="submit" value="Create" class="btn btn-primary" />
+						}
+					</div>
+					@*<div class="form-group">
+					<input type="submit" value="Create" class="btn btn-primary" disabled />
+					</div>*@
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<div>
+	<i class="fa fa-hand-o-left"></i>
+	<a asp-controller="Bills" asp-action="Details" asp-route-id="@Model.Bill_ID" class="backbtn">Back bill detailes </a>
+</div>
+
+
+
+
+@*<div>
+	@if (Model.bill != null)
+	{
+		<h4>Bill Info</h4>
+		<table class="table table-bordered table-hover cd-table order-table table-striped">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Bill Number</th>
+					<th>Client Name</th>
+					<th>Client Number</th>
+					<th>Bill sell</th>
+					<th>Bill State</th>
+					<th>Date</th>
+					<th>Expire Date</th>
+					<th>Total Price</th>
+					<th>Note</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					@if (Model.bill.Bill_Num != null)
+					{
+						<td>@Model.bill.Bill_Num</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Client_Name != null)
+					{
+						<td>@Model.bill.Client_Name</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Client_phone != null)
+					{
+						<td>@Model.bill.Client_phone</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.sell_State != null)
+					{
+						<td>@Model.bill.sell_State</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Bill_State != null)
+					{
+						<td>@Model.bill.Bill_State</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Date != null)
+					{
+						<td>@Model.bill.Date</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Exp_Date != null)
+					{
+						<td>@Model.bill.Exp_Date</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Total_Price != null)
+					{
+						<td>@Model.bill.Total_Price</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					@if (Model.bill.Total_Price != null)
+					{
+						<td>@Model.bill.Note</td>
+					}
+					else
+					{
+						<td>----</td>
+					}
+					
+				</tr>
+			</tbody>
+		</table>
+
+		@if (Model.payed_Quantities.Count != 0)
+		{
+			<h4> payed Qunatity in Bill </h4>
+			<table class="table table-bordered col-6">
+				<thead>
+					<tr>
+						<th> Value </th>
+						<th>Date </th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (Payed_quantity payeditem in Model.payed_Quantities)
+					{
+						<tr>
+							<td>@payeditem.value</td>
+							<td>@payeditem.Date_Payed</td>
+						</tr>
+
+						@if (payeditem.value != null)
+                        {
+                           
+                            totalpayed += payeditem.value;
+                        }
+                        @if (payeditem.value != null && payeditem.bill.Total_Price !=null)
+                        {
+                            remainingQ = payeditem.bill.Total_Price - totalpayed;
+                        }
+					}
+					<tr>
+						<td>total payed </td>
+						<td colspan="3">@totalpayed</td>
+
+					</tr>
+					<tr>
+						<td>The remaining quantity </td>
+						<td colspan="3">@remainingQ</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		}
+		else
+		{
+			<h4> Sorry! there is no payed Quantities for this bill</h4>
+		}
+
+	}
+</div>
+
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Stoc </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+				<form asp-action="Create" method="post">
+                   @* <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+					@*<input asp-for="Bill_ID" class="form-control" hidden />
+                    <div class="form-group">
+                        <label asp-for="value" class="control-label"></label>
+                        <input asp-for="value" class="form-control" />
+                        <span asp-validation-for="value" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Date_Payed" class="control-label"></label>
+                        <input asp-for="Date_Payed" class="form-control" />
+                        <span asp-validation-for="Date_Payed" class="text-danger"></span>
+                    </div>
+					<div>
+						@if (totalpayed >= Model.bill.Total_Price)
+						{
+							<input type="submit" value="Create" class="btn btn-primary" disabled />
+						}
+						else
+						{
+							<input type="submit" value="Create" class="btn btn-primary"  />
+						}
+					</div>*@
+                    @*<div class="form-group">
+						<input type="submit" value="Create" class="btn btn-primary" disabled />
+                    </div>*@
+                @*</form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <i class="fa fa-hand-o-left"></i>
+    <a asp-controller="Bills" asp-action="Details" asp-route-id="@Model.Bill_ID">Back bill detailes </a>
+</div>*@
+
+
+
+

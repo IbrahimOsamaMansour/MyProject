@@ -1,0 +1,129 @@
+﻿@model Expenses
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Add Expense</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content" style="display: block;">
+        <br>
+        <form id="demo-form2" data-parsley-validate="" asp-action="Create" asp-controller="Expenses" method="post" class="form-horizontal form-label-left" novalidate="">
+            <div class="item form-group">
+                <div class="text-danger" asp-validation-summary="All"></div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Value">
+                </label>
+
+                <div class="col-md-4 col-sm-4 ">
+                    <input asp-for="Value" type="number" placeholder="00.00 LE" required="required"  class="form-control ">
+                    <span class="text-danger" asp-validation-for="Value"></span>
+
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Expense_Date">
+                </label>
+                <div class="col-md-4 col-sm-4 ">                    
+                        <input asp-for="Expense_Date" class="form-control" />
+                        <span asp-validation-for="Expense_Date" class="text-danger"></span>                   
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="Item_Ex_ID">
+                </label>
+
+                <div class="col-md-4 col-sm-4 ">
+                    <select asp-for="Item_Ex_ID" asp-items="ViewBag.ItemExpenses as SelectList" class="form-control">
+                        <option value="0">Choose one</option>
+                    </select>
+                    <span class="text-danger" asp-validation-for="Item_Ex_ID"></span>
+                </div>
+            </div>
+            <div class="item form-group">
+                <label class="col-form-label col-md-3 col-sm-3 label-align" asp-for="note">
+                </label>
+
+                <div class="col-md-4 col-sm-4 ">
+                    <textarea asp-for="note" class="form-control" rows="3"   placeholder="Enter Your Expenses Note"></textarea>
+                </div>
+            </div>
+
+
+
+            <div class="ln_solid"></div>
+            <div class="item form-group">
+                <div class="col-md-6 col-sm-6 offset-md-3">
+                    <input type="submit" class="btn btn-success" value="Add">
+
+                </div>
+
+            </div>
+        </form>
+        <hr />
+        <div class="item form-group">
+                <div class="col-md-6 col-sm-6 offset-md-3">
+                    <a  asp-action="ShowAllExpenses" asp-controller="Expenses"><i class="fa fa-hand-o-left"></i>Back</a>
+                    
+
+                </div>
+
+            </div>
+    </div>
+</div>
+
+@section aaa{
+    <script type="text/javascript">
+        $(function () {
+            $('#myDatepicker').datetimepicker();
+        });
+
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+
+        $('#myDatepicker3').datetimepicker({
+            format: 'hh:mm A'
+        });
+
+        $('#myDatepicker4').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#datetimepicker6').datetimepicker();
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false
+        });
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    </script>
+}

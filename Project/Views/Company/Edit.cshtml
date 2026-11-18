@@ -1,0 +1,53 @@
+﻿@model Project.Models.Company
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<h1> Company</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12 col-sm-12 " >
+        <div class="x_panel" style="margin-left:20%; width:50%">
+            <div class="x_title">
+                <h2>Edit <span style="color:#17a2b8"> Company </span> </h2>
+                
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="x_content">
+        <form name="creatCatForm" asp-action="Edit" class="form-horizontal form-label-left">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PersonContact" class="control-label"></label>
+                <input asp-for="PersonContact" class="form-control" />
+                <span asp-validation-for="PersonContact" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+@*            <div asp-validation-summary="All" class="text-danger"></div>
+*@        </form>
+   
+</div>
+</div>
+</div>
+</div>
+<div style="margin-left:20%; width:60%">
+    <a asp-action="Details" asp-route-id="@Model.ID"><i class="fa fa-hand-o-left"></i>Back to Detail</a>
+</div>
+<div style="margin-left:20%; width:60%">
+    <a  asp-action="Index"><i class="fa fa-hand-o-left"></i>Back to List</a>
+</div>
+
+

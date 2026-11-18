@@ -1,0 +1,102 @@
+﻿@model Project.ViewModel.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Registration</title>
+    <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css">
+     <link rel="stylesheet" href="~/css/style.css">
+    </head>
+    <body style="padding:5px; margin:0;" class="loginbody">
+
+    <div class="gradient-custom-3" style="margin:0;">
+        <div style="padding:1px" ></div>
+            <div class="main">
+                <section class="signup">
+                    <div class="container ">
+                    <div class="signup-content text-center" style="padding: 30px 80px;  height:85%; width: 60%; margin-top:20px;margin-left:8%;">
+                        <form id="signup-form" class="signup-form" asp-action="Login" style="padding-top:15%;">
+                                <div asp-validation-summary="All" style="color:red" class="text-danger"></div>
+                            <h2 class="form-title">LOGIN</h2>
+                                <div class="form-group">
+                                    <input asp-for="username" class="form-input form-control" placeholder="Your Name" />
+                                    <span style="color:red" asp-validation-for="username" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <input asp-for="password" class="form-input form-control" placeholder="Password" />
+                                <span style="color:red" asp-validation-for="password" class="text-danger"></span>
+                                </div>
+                            <div class="form-group">
+                                <input type="checkbox"  asp-for="rememberMe" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>Remember Me</label>
+                            </div>
+                                <div class="form-group">
+                                <input type="submit" value="Log-in" class="form-submit" />
+                                </div>
+                            </form>
+                            <div>
+                            <p class="loginhere">
+                                if you don't have account ! <a asp-action="Registration" class="loginhere-link">Register here</a>
+                            </p>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <script src="~/vendor/jquery/jquery.min.js"></script>
+        <script src="~/js/main.js"></script>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+    </body>
+    </html>
+
+    @*<h1>Login</h1>
+
+<h4>LoginViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="username" class="control-label"></label>
+                <input asp-for="username" class="form-control" />
+                <span asp-validation-for="username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="rememberMe" /> @Html.DisplayNameFor(model => model.rememberMe)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Registrationnew">Register</a>
+</div>
+*@
+

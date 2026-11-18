@@ -1,0 +1,56 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+@*<h1>@Model.Name</h1>*@
+
+<div class="x_panel"style="margin-left:20%; width:60%">
+    <div class="x_title">
+        <h2>@Model.Name</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content" style="display: block;">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card-box table-responsive">
+                    <div id="datatable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table id="datatable" class="table table-striped table-bordered dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class="sorting_asc" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Name: activate to sort column descending" aria-sort="ascending" style="width: 148px;">Name</th>
+                                            <th class="sorting" tabindex="0" aria-controls="datatable" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 233px;">Category</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(model => model.Name)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(model => model.SubCategory.Name)
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

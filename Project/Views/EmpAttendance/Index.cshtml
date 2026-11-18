@@ -1,0 +1,230 @@
+﻿@model IEnumerable<Project.Models.Emp_Attendance>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    int x = 1;
+}
+<br />
+<h1 style="font-weight:bolder ; color:#2a3f54"> Employee Attendance</h1>
+@if(TempData["DoneAttendance"] != null)
+{
+<h4 class="alert alert-success">@TempData["DoneAttendance"]</h4>
+}
+<br />
+
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+        <div class="x_title">
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+            <div class="row">
+                <h3 class="col-7">
+                    <a class="btn btn-info " asp-action="Create">Add Attendance</a>
+                </h3>
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table table-hover cd-table order-table table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            #       
+                        </th>
+                        <th>
+                            Employee
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.OverTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Attendance)
+                        </th>
+                       
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>
+
+                                @(x++)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Workers.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.OverTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Attendance)
+                            </td>
+                          
+                            <td>
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                              @*  <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a>*@ 
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OverTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Workers)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OverTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Attendance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Workers.Name)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+
+
+
+
+
+
+*@
+
+
+
+
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+                //console.log(text);
+                var val = input.value.toLowerCase();
+                //console.log(val);
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+
+        })();
+
+        /*console.log(document.readyState);
+          document.addEventListener('readystatechange', function() {
+              if (document.readyState === 'complete') {
+            console.log(document.readyState);
+                  TableFilter.init();
+              }
+          }); */
+
+        TableFilter.init();
+    })();
+
+</script>

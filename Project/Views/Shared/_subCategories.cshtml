@@ -1,0 +1,20 @@
+﻿@model PurchesingViewModel
+@{
+
+	SelectList subcategoryItem = new SelectList(Model.subCategories, "Id", "Name");
+}
+
+<label class="col-form-label col-md-3 col-sm-3 label-align" for="subCateg_id">SubCategory: <span class="required">*</span>
+											</label>
+											<div class="col-md-6 col-sm-6 ">
+												@if(subcategoryItem.Count() ==0 ){
+												<select class="form-control" id="subCateg_id" >
+													<option>No SubCategory </option>
+													
+												</select>
+												}else{
+												<select class="form-control" asp-for="subCateg_id" asp-items="subcategoryItem">
+													<option value="0"> -- choose subchategory -- </option>
+													
+												</select>}
+											</div>

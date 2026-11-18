@@ -1,0 +1,195 @@
+﻿@model List<Item_Expenses>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    int x = 1;
+}
+  <link rel="stylesheet" href="~/css/ProjectStyle.css">
+<h1 style="font-weight:bolder ; color:#2a3f54"> Item Expenses</h1>
+<br />
+
+
+
+
+
+@*==============================================*@
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+        <div class="x_title ">
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <h3 class="col-7">
+                    <a class="btn btn-info " asp-action="Create">Add Item Expenses</a>
+                </h3>
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table table-hover cd-table order-table table-striped">
+                <thead>
+                    <tr>
+                        <th> Id</th>
+                        <th>Item Expnses Name</th>
+                        <th></th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @(x++)
+                            </td>
+
+                            <td>@item.Name</td>
+                            <td>
+                                <a class="btn btn-outline-success" asp-controller="Item_Expenses" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+
+                                <a class="btn btn-outline-danger" asp-controller="Item_Expenses" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+
+
+
+<section class="container cd-table-container">
+    <div>
+        <h2 class="cd-title rounded-pill ">Filter Item Expenses:</h2>
+        <input type="text" class="cd-search table-filter form-control" data-table="order-table" placeholder="Item to filter.." />
+    </div>
+    
+    <div class="mb-2">
+        <h3>
+            <a asp-action="Create" asp-controller="Item_Expenses" class="p-3 mb-2 bg-primary text-white">Create New Item Expenses </a>
+        </h3>
+    </div>
+
+    <div class="mt-2">
+        <table class="cd-table order-table table ">
+
+    <thead>
+        <tr>
+                    <th> Id</th>
+                    <th>Item Expnses Name</th>
+                    <th></th>
+                    <th></th>
+        </tr>
+    </thead>
+    <tbody>
+          @foreach (var item in Model) {
+        <tr>
+             <td>
+                @(x++)
+             </td>
+
+             <td>@item.Name</td>
+            <td>
+              <a class="btn btn-success" asp-controller="Item_Expenses" asp-action="Edit" asp-route-id="@item.ID">Edit</a>
+            </td>
+             <td>  
+                 <a class="btn btn-danger" asp-controller="Item_Expenses" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+             </td>
+        </tr>
+}
+    </tbody>
+</table>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+*@
+
+
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+
+                var val = input.value.toLowerCase();
+
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+        })();
+
+        TableFilter.init();
+    })();
+</script>

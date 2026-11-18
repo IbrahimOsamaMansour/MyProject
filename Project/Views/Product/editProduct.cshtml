@@ -1,0 +1,196 @@
+﻿@model ProductViewModel
+@{
+    ViewData["Title"] = "editProduct";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+
+	SelectList companyItem = new SelectList(Model.companies, "ID", "Name");
+	SelectList categoryItem = new SelectList(Model.Categories, "Id", "Name");
+
+	SelectList subcategoryItem = new SelectList(Model.subCategories, "Id", "Name");
+}
+
+
+<h1>edit Purchaching</h1>
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Edit  </h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div class="x_content">
+				<br />
+
+				@if (TempData["suc"] != null)
+				{
+					<h4 class="alert alert-success">Edit Product is Done Successfull  </h4>
+				}
+				@if (TempData["fail"] != null)
+				{
+					<h4 class="alert alert-danger">Sorry Edit Product is Fail! </h4>
+				}
+
+
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					<form asp-action="editProduct" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+						<input asp-for="Id" hidden />
+						<input asp-for="ReservedQuantity" hidden />
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="Comp_id">
+								Company <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (companyItem.Count() == 0)
+								{
+									<select class="form-control" id="Comp_id">
+										<option value="NULL">No Company </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="Comp_Id" asp-items="companyItem">
+										<option value="NULL"> -- choose company -- </option>
+
+									</select>
+								}
+								<span  style="color:red" asp-validation-for="Comp_Id"></span>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="Categ_Id">
+								Category: <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (categoryItem.Count() == 0)
+								{
+									<select class="form-control" id="Categ_Id">
+										<option value="NULL">No Category </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="Categ_Id" asp-items="categoryItem" onchange="categchang()">
+										<option value="NULL"> -- choose chategory -- </option>
+
+									</select>
+								}
+								<span  style="color:red" asp-validation-for="Categ_Id"></span>
+							</div>
+						</div>
+
+						<div class="item form-group" id="divsubcateg">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="subCateg_id">
+								SubCategory: <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (subcategoryItem.Count() == 0)
+								{
+									<select class="form-control" id="subCateg_id">
+										<option>No SubCategory </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="subCateg_id" asp-items="subcategoryItem">
+										<option value="NULL"> -- choose subchategory -- </option>
+
+									</select>
+								}
+								<span style="color:red" asp-validation-for="subCateg_id"></span>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label asp-for="ModelName" class="col-form-label col-md-3 col-sm-3 label-align" for="ModelName">
+								Name Model <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="ModelName" class="form-control ">
+								<span style="color:red" asp-validation-for="ModelName"></span>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label asp-for="Name" for="Name" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="Name" class="form-control">
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label asp-for="Number" for="Number" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="Number" class="form-control">
+							</div>
+						</div>
+						<div class="item form-group">
+							<label asp-for="Description" for="Description" class="col-form-label col-md-3 col-sm-3 label-align"></label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="Description" class="form-control">
+							</div>
+						</div>
+
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="col-md-6 col-sm-6 offset-md-3">
+								<button type="submit" class="btn btn-success">Save Edit</button>
+							</div>
+						</div>
+
+					</form>
+
+					<div class="ln_solid"></div>
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Index" class="btn btn-success"> <i class="fa fa-hand-o-left"></i> back</a>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+@section script{
+	<script>
+		function categchang() {
+
+			var categoryselect = document.getElementById("Categ_Id");
+			var divsubcateg = document.getElementById("divsubcateg");
+
+			console.log(categoryselect.value);
+			$.ajax({
+				url: "http://localhost:5233/Purchasing/getsubcategorys/" + categoryselect.value,
+				method: "post",
+				success: function (result) {
+					console.log(result);
+					divsubcateg.innerHTML = result;
+
+				}
+			});
+		}
+
+	</script>
+}

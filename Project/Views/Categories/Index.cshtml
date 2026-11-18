@@ -1,0 +1,193 @@
+﻿@model List<Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+     int x = 1;
+}
+<style>
+    .ms-n5 {
+        margin-left: -40px;
+    }</style>
+<link rel="stylesheet" href="~/css/ProjectStyle.css">
+<br />
+<h1 style="font-weight:bolder ; color:#2a3f54"> Categorys</h1>
+
+<br />
+<div class="clearfix"></div>
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+
+
+        <div class="x_title row">
+            <h3 class="col-11"></h3>
+           
+            
+        
+            <div class="col-1  justify-content-end">
+                <ul class="nav navbar-right panel_toolbox @*col-4*@">
+                 
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+
+            </div>
+             <div class="clearfix "></div>
+        </div>
+
+       
+        <div class="x_content">
+            <div class=" row">
+                <h3 class="col-7"><a asp-action="Create" asp-controller="Categories" class="btn btn-info">Add Category </a></h3>
+
+                <div class="col-5   " style="padding-top: 10px">
+                    <div class="input-group ">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-hover  cd-table order-table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                            <th>Category Name</th>
+
+                            <th></th>
+                            <th></th>
+                        <th></th>
+                           
+                    </tr>
+                </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                            <td >
+                                    @(x++)
+                                </td>
+
+                            <td colspan="3">@item.Name</td>
+
+                                <td  >
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-controller="Categories" asp-route-id="@item.Id">Edit</a>
+
+                                <a class="btn btn-outline-info" asp-action="Details" asp-controller="Categories" asp-route-id="@item.Id">Details</a>
+
+                                <a class="btn btn-outline-danger" asp-action="Delete" asp-controller="Categories" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                               
+                               
+                            </tr>
+                        }
+                    </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+@*====================================================================
+*@
+
+<br />
+
+
+@*
+
+<section class="container cd-table-container">
+    <div>
+        <h2 class="cd-title rounded-pill ">Filter Category:</h2>
+        <input type="text" class="cd-search table-filter form-control" data-table="order-table" placeholder="Item to filter.." />
+    </div>
+ <hr />
+    <div>
+        <h3 >
+            <a asp-action="Create" asp-controller="Categories" class="p-3 mb-2 bg-primary text-white">Create New Category </a>
+        </h3>
+    </div>
+<hr />
+    <div>
+        <table class="cd-table order-table table">
+            <thead>
+                <tr>
+                    <th>Category Id</th>
+                    <th>Category Name</th>
+
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @( x++ )
+                        </td>
+
+                        <td>@item.Name</td>
+
+                        <td>
+                            <a class="btn btn-success"  asp-action="Edit" asp-controller="Categories" asp-route-id="@item.Id">Edit</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Details" asp-controller="Categories" asp-route-id="@item.Id">Details</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" asp-action="Delete" asp-controller="Categories" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</section>
+*@
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+             
+                var val = input.value.toLowerCase();
+            
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+        })();
+
+        TableFilter.init();
+    })();
+</script>

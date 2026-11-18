@@ -1,0 +1,580 @@
+﻿@model IEnumerable<Project.Models.Bill>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+
+
+
+<h1>All BILL</h1>
+@if (TempData["sucDelete"] != null)
+{
+    <h4 class="alert alert-success">@TempData["sucDelete"]</h4>
+}
+
+<br />
+
+
+
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+
+
+        <div class="x_title ">
+            <h2>   Billing<span style="color:#17a2b8">  Under Payment</span> </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+                <div class="x_content">
+                      <div class="row"> 
+                <h3 class="col-7">
+                    <a class="btn btn-info " asp-action="Create">Add Bill</a>
+                </h3>
+
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-tablle="order-fill" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+
+@*            order-table
+*@
+                
+                <table class="cd-table order-fill         table table-hover   table-striped">
+            <thead>
+                <tr>
+                    <th>
+                      Bill#
+                    </th>
+                    <th>
+                       Client name
+                    </th>
+                    <th>
+                      resive bill
+                    </th>
+                    <th>
+                       payment
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                       client phone
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @if (item.Bill_State == false && DateTime.Now > item.Exp_Date)
+                    {
+
+                    }
+                    else if(item.Bill_State == true && item.sell_State == false)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_Num)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sell_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+
+                            @* <td>
+                    @Html.DisplayFor(modelItem => item.Exp_Date)
+                    </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_phone)
+                            </td>
+                            @*<td>
+                    @Html.DisplayFor(modelItem => item.Total_Price)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                    </td>*@
+                            <td>
+                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a> 
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+
+
+        <div class="x_title ">
+            <h2>  <span style="color:#17a2b8"> Booking</span>Bills  </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+                <div class="x_content">
+                      <div class="row"> 
+                <h3 class="col-7">
+                    @*<a class="btn btn-info " asp-action="Create">Add Bill</a>*@
+                </h3>
+
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-tablle="order-fill" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+                <table class="cd-table order-fill         table table-hover   table-striped">
+            <thead>
+                <tr>
+                        <th>
+                            Bill#
+                        </th>
+                        <th>
+                            Client name
+                        </th>
+                        <th>
+                            resive bill
+                        </th>
+                        <th>
+                            payment
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th>
+                            client phone
+                        </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @if (item.Bill_State == false && DateTime.Now > item.Exp_Date)
+                    {
+
+                    }
+                    else if(item.Bill_State == false && item.sell_State == false)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_Num)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sell_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_phone)
+                            </td>
+                          
+                            <td>
+                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a> 
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+
+
+        <div class="x_title ">
+            <h2>  <span style="color:#17a2b8"> Sold </span>Bills</h2>
+            <ul class="nav navbar-right panel_toolbox">
+                
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+                <div class="x_content">
+                      <div class="row"> 
+                <h3 class="col-7">
+                    @*<a class="btn btn-info " asp-action="Create">Add Bill</a>*@
+                </h3>
+
+
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-tablle="order-fill" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+                <table class="cd-table order-fill         table table-hover   table-striped">
+            <thead>
+                <tr>
+                        <th>
+                            Bill#
+                        </th>
+                        <th>
+                            Client name
+                        </th>
+                        <th>
+                            resive bill
+                        </th>
+                        <th>
+                            payment
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th>
+                            client phone
+                        </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    @if (item.Bill_State == false && DateTime.Now > item.Exp_Date)
+                    {
+
+                    }
+                    else if(item.Bill_State == true && item.sell_State == true)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_Num)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Bill_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.sell_State)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Client_phone)
+                            </td>
+                          
+                            <td>
+                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a> 
+
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+
+
+<br />
+<hr />
+<br />
+
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+
+        <div class="x_title">
+            <h2>Bill  <span  style="color:#17a2b8">Date Expired</span></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+               
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <h3 class="col-7">
+                   
+                </h3>
+
+                <div class ="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filt form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+            <table class="cd-table order-table        table table-hover   table-striped">
+                <thead>
+                    <tr>
+                        <th>
+                            Bill#
+                        </th>
+                        <th>
+                            Client name
+                        </th>
+                        <th>
+                            resive bill
+                        </th>
+                        <th>
+                            payment
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th>
+                            client phone
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @if (item.Bill_State == false && DateTime.Now > item.Exp_Date)
+                        {
+
+                        
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bill_Num)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Client_Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bill_State)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.sell_State)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+
+                                @* <td>
+                        @Html.DisplayFor(modelItem => item.Exp_Date)
+                        </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Client_phone)
+                                </td>
+                                @*<td>
+                        @Html.DisplayFor(modelItem => item.Total_Price)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.Note)
+                        </td>*@
+                                <td>
+                                    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a>
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+                //console.log(text);
+                var val = input.value.toLowerCase();
+                //console.log(val);
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filt');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+
+        })();
+
+        /*console.log(document.readyState);
+          document.addEventListener('readystatechange', function() {
+              if (document.readyState === 'complete') {
+            console.log(document.readyState);
+                  TableFilter.init();
+              }
+          }); */
+
+        TableFilter.init();
+    })();
+
+</script>
+
+
+
+@*
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+*@
+
+
+
+
+
+<script>
+    (function () {
+        'use strict';
+
+        var TableFilter = (function () {
+            var Arr = Array.prototype;
+            var input;
+
+            function onInputEvent(e) {
+                input = e.target;
+                var table1 = document.getElementsByClassName(input.getAttribute('data-tablle'));
+                Arr.forEach.call(table1, function (table) {
+                    Arr.forEach.call(table.tBodies, function (tbody) {
+                        Arr.forEach.call(tbody.rows, filter);
+                    });
+                });
+            }
+
+            function filter(row) {
+                var text = row.textContent.toLowerCase();
+                //console.log(text);
+                var val = input.value.toLowerCase();
+                //console.log(val);
+                row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+            }
+
+            return {
+                init: function () {
+                    var inputs = document.getElementsByClassName('table-filter');
+                    Arr.forEach.call(inputs, function (input) {
+                        input.oninput = onInputEvent;
+                    });
+                }
+            };
+
+        })();
+
+        /*console.log(document.readyState);
+          document.addEventListener('readystatechange', function() {
+              if (document.readyState === 'complete') {
+            console.log(document.readyState);
+                  TableFilter.init();
+              }
+          }); */
+
+        TableFilter.init();
+    })();
+
+</script>

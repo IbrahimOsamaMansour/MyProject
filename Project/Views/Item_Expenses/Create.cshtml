@@ -1,0 +1,80 @@
+﻿@model Project.Models.Item_Expenses
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<link rel="stylesheet" href="~/css/ProjectStyle.css">
+
+
+<h4>Item Expenses</h4>
+<hr />
+@*<div class="row">
+
+    <div class="col-md-4">
+        <form asp-action="Create" asp-controller="Item_Expenses">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label fs-1"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+*@
+
+
+
+
+@*===============================================================*@
+
+
+
+
+
+
+
+<div class="x_panel col-6" style="margin-left:20%; width:60%">
+	<div class="x_title ">
+		<h2>Add <span style="color:#17a2b8">Item Expenses</span></h2>
+		<ul class="nav navbar-right panel_toolbox">
+		
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+	<div class="x_content">
+		<br />
+		<form asp-action="Create" asp-controller="Item_Expenses" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+			<div class="item form-group">
+				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+				<label asp-for="Name" class="col-form-label col-md-3 col-sm-3 label-align" >
+					
+				</label>
+				<div class="col-md-8 col-sm-8 ">
+					<input asp-for="Name" class="form-control ">
+					<span asp-validation-for="Name" class="text-danger"></span>
+				</div>
+			</div>
+
+
+			<div class="ln_solid"></div>
+			<div class="item form-group">
+				<div class="col-md-6 col-sm-6 offset-md-3">
+					<div class="form-group">
+						<input type="submit" value="Create" class="btn btn-primary" />
+					</div>
+				</div>
+
+			</div>
+		</form>
+		
+	</div>
+</div>
+         <div>
+	<a style="margin-left:20%; width:60%" asp-action="Index" class="backbtn">Back to List </a>
+		</div>

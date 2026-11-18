@@ -1,0 +1,185 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+<h1>Detail</h1>
+
+<h1> Quantity</h1>
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Details of Purchasing</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div class="x_content">
+				<br />
+
+
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					@if (Model != null)
+					{
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>company</th>
+									<th>category </th>
+									<th>sub category</th>
+									<th>Model Name</th>
+									<th>description</th>
+									<th>Quantity reserved</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									@if (Model.company != null)
+									{
+										<td>@Model.company.Name</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+									@if (Model.category != null)
+									{
+										<td>@Model.category.Name</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+									@if (Model.subcategory != null)
+									{
+										<td>@Model.subcategory.Name</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+									@if (Model.ModelName != null)
+									{
+										<td>@Model.ModelName</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+									
+									@if (Model.Description != null)
+									{
+										<td>@Model.Description</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+									@if (Model.ReservedQuantity != null)
+									{
+										<td>@Model.ReservedQuantity</td>
+									}
+									else
+									{
+										<td>----</td>
+									}
+
+								</tr>
+							</tbody>
+						</table>
+						<a class="btn btn-success " asp-action="addQuantity" asp-controller="Product" asp-route-id="@Model.Id">Add Quantity</a>
+						@if (TempData["fail"] != null)//delete Quantity Faild
+						{
+							<h4 class="alert alert-danger">@TempData["fail"] </h4>
+						}
+						@if (TempData["delq"] != null)//Delete quantity is success
+						{
+							<h4 class="alert alert-info">@TempData["delq"] </h4>
+						}
+						@if (TempData["delfail"] != null)
+						{
+							<h4 class="alert alert-danger">@TempData["delfail"]</h4>
+						}
+						@if (TempData["editQuantity"] != null)//Edit Quantity is done
+						{
+							<h4 class="alert alert-success">@TempData["editQuantity"]</h4>
+						}
+						@if (TempData["delete"] != null)//delete quantity before delete product
+						{
+							<h4 class="alert alert-danger">@TempData["delete"]</h4>
+						}
+
+						@if (Model.Product_Quantities.Count != 0)
+						{
+							<table class="table table-bordered col-6">
+								<thead>
+									<tr>
+										<th>Quantity </th>
+										<th>unit </th>
+										<th colspan="3"></th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model.Product_Quantities)
+									{
+										<tr>
+											<td>@item.ValueQuantity</td>
+											<td>@item.UnitQuantity</td>
+											<td><a asp-action="editQuantity" asp-route-id="@item.Id" class="btn btn-info">Edit</a></td>
+											<td> <a asp-action="deleteQuantity" asp-route-id="@item.Id" asp-route-idpro="@Model.Id" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
+										</tr>
+									}
+
+								</tbody>
+							</table>
+						}
+						else
+						{
+							<h4> Sorry! there is no Quantity</h4>
+						}
+					}
+
+					<div class="item form-group">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="deleteProduct" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">Delete Product</a>
+						</div>
+					</div>
+
+					<div class="ln_solid"></div>
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="index" class="btn btn-success ">Back to product <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section script{
+	<script type="text/javascript">
+		function DeleteItem() {
+			if (confirm("Are you sure you want to delete ...?")) {
+				return true;
+			}
+			return false;
+		}
+	</script>
+}
+
+
+

@@ -1,0 +1,266 @@
+﻿@model DeleteProductBillViewModel
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<div class="title_left">
+	<h3>Delete Product In Bill</h3>
+</div>
+@if (TempData["resultDeleteProduct"]  != null){
+	<div class="title_left">
+		<h3 class="alert alert-info">@TempData["resultDeleteProduct"]</h3>
+	</div>
+}
+<div class="clearfix"></div>
+
+					<div class="row">
+						<div class="col-md-6 ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Bill <small>Info</small></h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+										</li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<br>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input type="text" value="@Model.bill.Bill_Num" class="form-control has-feedback-left" disabled="disabled">
+										<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+										<p>Bill Number</p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input value="@Model.bill.Date.Date"  class="form-control" readonly>
+										<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+										<p>Date</p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input type="text" value="@Model.bill.Client_Name" class="form-control has-feedback-left" readonly>
+										<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+										<p>Client Name </p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input value="@Model.bill.Client_phone" type="text" class="form-control" id="inputSuccess3" readonly>
+										<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+										<p>Client phone</p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input type="text" value="@Model.bill.Total_Price" class="form-control has-feedback-left" disabled="disabled">
+										<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+										<p>Total Price  </p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input value="@Model.bill.Bill_State" type="text" class="form-control" id="inputSuccess3" readonly>
+										<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+										<p>Bill Sell</p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input value="@Model.bill.sell_State" type="text" class="form-control" readonly>
+										<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+										<p>payed Total Price</p>
+									</div>
+									<div class="col-md-6 col-sm-6  form-group has-feedback">
+										<input value="@Model.bill.Exp_Date" type="text" class="form-control" readonly>
+										<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+										<p>Expire Date</p>
+									</div>
+								</div>
+							</div>
+
+							
+
+						</div>
+
+						<div class="col-md-6 ">
+							<div class="x_panel">
+								<div class="x_title">
+									<h2>Product<small>Info</small></h2>
+									<ul class="nav navbar-right panel_toolbox">
+										<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+										</li>
+										<li><a class="close-link"><i class="fa fa-close"></i></a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+								<div class="x_content">
+									<br>
+										
+
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 ">Company </label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" Value="@Model.product.company.Name" class="form-control" disabled="disabled" />
+											</div>
+										</div>
+										@if(Model.product.category != null){
+
+											<div class="form-group row">
+												<label class="col-form-label col-md-3 col-sm-3 ">Category </label>
+												<div class="col-md-9 col-sm-9 ">
+													<input type="text" Value="@Model.product.category.Name" class="form-control" disabled="disabled" />
+												</div>
+											</div>
+										}
+										@if(Model.product.subcategory != null){
+											<div class="form-group row">
+												<label class="col-form-label col-md-3 col-sm-3 ">subCategory </label>
+												<div class="col-md-9 col-sm-9 ">
+													<input type="text" Value="@Model.product.subcategory.Name" class="form-control" disabled="disabled" />
+												</div>
+											</div>
+										}
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 ">Model Name </label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" Value="@Model.product.ModelName" class="form-control" disabled="disabled" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 ">Reserved quantity  </label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" Value="@Model.product.ReservedQuantity" class="form-control" disabled="disabled" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 ">Name </label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" Value="@Model.product.Name" class="form-control" disabled="disabled" />
+											</div>
+										</div>
+										<div class="form-group row">
+											<label class="col-form-label col-md-3 col-sm-3 ">Number </label>
+											<div class="col-md-9 col-sm-9 ">
+												<input type="text" Value="@Model.product.Number" class="form-control" disabled="disabled" />
+											</div>
+										</div>
+										<table class="table table-bordered col-6">
+											<h3>product Quantity</h3>
+											<thead><tr><th>quantity</th><th>unit</th></tr></thead>
+											<tbody>
+												@if(Model.product.Product_Quantities.Count !=0){
+													foreach (var item in Model.product.Product_Quantities)
+													{
+														<tr>
+															<td>@item.ValueQuantity</td>
+															<td>@item.UnitQuantity</td>
+														</tr>
+													}
+												}
+											</tbody>
+										</table>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Notes:</h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>					
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			@*chaeck bill is sold*@
+			@if(Model.bill.Bill_State == true ){
+				<div class="x_content" style="display: block;">
+					<h4>Product is already sold before</h4>
+					<div>
+						<div class="starrr stars"></div>
+						Be noted that the quantity will add in quantity of product
+					</div>
+
+					<h3 style="color: red">Are you sure you want to delete prodct ?</h3>
+					<div class="starrr stars-existing" data-rating="4"></div>
+				</div>
+			}
+			@*chaeck bill is booking*@
+			@if(Model.bill.Bill_State == false ){
+				<div class="x_content" style="display: block;">
+					<h4>Product is booked</h4>
+					<div>
+						<div class="starrr stars"></div>
+						Be noted that the quantity will delete from Reserved quantity in product
+					</div>
+
+					<h3 style="color: red">Are you sure you want to delete prodct ?</h3>
+					<div class="starrr stars-existing" data-rating="4"></div>
+				</div>
+			}
+		</div>
+
+		</div>
+		</div>
+<!--Form -->
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Delete <small>Product in Bill</small></h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+				
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<div class="x_content">
+				<br>
+				<form asp-action="Delete" method="post" id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+					<input asp-for="ID" hidden />
+					<table class="table table-bordered col-6">
+								<thead>
+									<tr>
+										<th>produuct Model Name </th>
+										<th>Quantity </th>
+										<th>unit price </th>
+										<th>Sell Date </th>
+										<th>Book Date </th>
+										<th>product is sold </th>
+
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>@Model.product_Bill.product.ModelName</td>
+										<td>@Model.product_Bill.Quantity @Model.product_Bill.unit_Quantity</td>										
+										<td>@Model.product_Bill.unit_Price</td>
+										<td>@Model.product_Bill.Sell_Date</td>
+										<td>@Model.product_Bill.Book_Date</td>
+										<td>@Model.product_Bill.Resv_Q_State</td>
+									</tr>
+								</tbody>
+							</table>
+					
+					
+					<div class="ln_solid"></div>
+					<div class="item form-group">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

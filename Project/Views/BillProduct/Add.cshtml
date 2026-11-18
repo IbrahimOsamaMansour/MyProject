@@ -1,0 +1,273 @@
+﻿@model ProductBillViewModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+	
+	SelectList quantitynits = new SelectList(Model.units);
+	SelectList productItemList = new SelectList(Model.products, "Id", "ModelName");
+}
+
+
+<h1> Add Product</h1>
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div class="x_content">
+				<br />
+			
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					
+					@if (Model.bill != null)
+					{
+						<h4>Bill Info</h4>
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th>Bill Number</th>
+									<th>Client Name</th>
+									<th>Client Number</th>
+									<th>payed state</th>
+									<th>Bill is sold</th>
+									<th>Date</th>
+									<th>Expire Date</th>
+									<th>Total Price</th>
+									<th>Note</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									@if (Model.bill.Bill_Num != null){<td>@Model.bill.Bill_Num</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Client_Name != null){<td>@Model.bill.Client_Name</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Client_phone!= null){<td>@Model.bill.Client_phone</td>}
+									else{<td>----</td>}
+									@if (Model.bill.sell_State!= null){<td>@Model.bill.sell_State</td>	}
+									else{<td>----</td>}										
+									@if (Model.bill.Bill_State != null){<td>@Model.bill.Bill_State</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Date != null){<td>@Model.bill.Date</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Exp_Date != null){<td>@Model.bill.Exp_Date</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Total_Price != null){<td>@Model.bill.Total_Price</td>}
+									else{<td>----</td>}
+									@if (Model.bill.Note != null){<td>@Model.bill.Note</td>}
+									else{<td>----</td>}
+								</tr>
+							</tbody>
+						</table>
+
+						@if(Model.ProductBills.Count != 0)
+						{
+							<h4> Produuct in Bill </h4>
+							<table class="table table-bordered col-6">
+								<thead>
+									<tr>
+										<th>produuct Model Name </th>
+										<th>Quantity </th>
+										<th>unit price </th>
+										<th>product is sold </th>
+										<th>Sell Date </th>
+										<th>Book Date </th>
+
+									</tr>
+								</thead>
+								<tbody>
+									@foreach (var item in Model.ProductBills)
+									{
+										<tr>
+											<td>@item.product.ModelName</td>
+											<td>@item.Quantity @item.unit_Quantity</td>										
+											<td>@item.unit_Price</td>
+											<td>@item.Resv_Q_State</td>
+											<td>@item.Sell_Date</td>
+											<td>@item.Book_Date</td>
+										</tr>
+									}
+
+								</tbody>
+							</table>
+						}
+						else
+						{
+							<h4> Sorry! there is no Product</h4>
+						}
+
+					}
+					@if(TempData["sucAddProd"] != null){<h4 class="alert alert-success">@TempData["sucAddProd"]</h4>}
+					<form asp-action="Add" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+						<input asp-for="Bill_ID" hidden />
+
+						<div asp-validation-summary="ModelOnly"></div>
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="product_ID"> Product
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (productItemList.Count() == 0)
+								{
+									<select class="form-control" asp-for="product_ID" id="product_ID">
+										<option value="0">there aren't products  </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="product_ID" asp-items="productItemList">
+										<option value="0"> -- choose product -- </option>
+
+									</select>
+								}<span style="color:red" asp-validation-for="product_ID"></span>
+							</div>
+						</div>
+
+
+						<div class="item form-group">
+							<label asp-for="Quantity" class="col-form-label col-md-3 col-sm-3 label-align" for="Quantity">Quantity
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="Quantity" placeholder="00" required="required" value="null" class="form-control">
+								@if (TempData["valQua"] != null)
+								{
+									<p style="color:red">@TempData["valQua"]</p>
+								}
+								<span style="color:red" asp-validation-for="Quantity"></span>
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="unit_Quantity"> Unit
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (quantitynits.Count() == 0)
+								{
+									<select asp-for="unit_Quantity" class="form-control" id="UnitQuantity">
+										<option value="NULL">No Unite quantity </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="unit_Quantity" asp-items="quantitynits">
+										<option value="NULL"> -- choose unite -- </option>
+
+									</select>
+								}<span style="color:red" asp-validation-for="unit_Quantity"></span>
+							</div>
+						</div>
+						<div class="item form-group">
+							<label asp-for="unit_Price" class="col-form-label col-md-3 col-sm-3 label-align" for="unit_Price"> Unit Price
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input asp-for="unit_Price" placeholder="00" required="required"  class="form-control">							
+								<span style="color:red" asp-validation-for="unit_Price"></span>
+							</div>
+						</div>
+						<div class="item form-group">
+							<label asp-for="Book_Date" class="col-form-label col-md-3 col-sm-3 label-align" for="unit_Price">
+								Book Date 
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+						<fieldset>
+							<div class="control-group">
+								<div class="controls">
+									<div class="col-md-6 col-sm-6">
+										<input name="Book_Date" type="text" class="form-control has-feedback-left" id="single_cal4" placeholder="Date Book" aria-describedby="inputSuccess2Status4">
+										<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+										<span id="inputSuccess2Status4" class="sr-only">(success)</span>
+									</div>
+								</div>
+							</div>
+						</fieldset>
+						</div>
+						</div>
+						<span style="color:red" asp-validation-for="Book_Date"></span>
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="col-md-6 col-sm-6 offset-md-3">
+								<button type="submit" class="btn btn-success">Add Product</button>
+							</div>
+						</div>
+
+					</form>
+
+					<div class="ln_solid"></div>
+					
+					
+					<br />
+					<br />
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Details" asp-controller="Bills" asp-route-id="@Model.Bill_ID" class="btn btn-success ">Back to Detail <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+					<div class="item form-group" style="float: right">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Index" asp-controller="Bills"  class="btn btn-success ">go to Bills <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+
+@section aaa{
+	<script type="text/javascript">
+		$(function () {
+			$('#myDatepicker').datetimepicker();
+		});
+
+		$('#myDatepicker2').datetimepicker({
+			format: 'DD.MM.YYYY'
+		});
+
+		$('#myDatepicker3').datetimepicker({
+			format: 'hh:mm A'
+		});
+
+		$('#myDatepicker4').datetimepicker({
+			ignoreReadonly: true,
+			allowInputToggle: true
+		});
+
+		$('#datetimepicker6').datetimepicker();
+
+		$('#datetimepicker7').datetimepicker({
+			useCurrent: false
+		});
+
+		$("#datetimepicker6").on("dp.change", function (e) {
+			$('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+		});
+
+		$("#datetimepicker7").on("dp.change", function (e) {
+			$('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+		});
+	</script>
+}

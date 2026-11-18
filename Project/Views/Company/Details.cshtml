@@ -1,0 +1,300 @@
+﻿@model Project.Models.Company
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+
+    SelectList deptList = new SelectList(ViewBag.Phoneitem, "COMP_ID", "Phone");
+}
+
+<h1>Details</h1>
+
+
+
+<!-- page content -->
+<div role="main">
+    <div class="">
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="x_panel">
+
+                    <div class="x_content">
+                        <div class="row">
+                            <div class="col-sm-4 mail_list_column">
+
+
+                                <div class="">
+                                    <div class="well profile_view">
+                                        <div class="col-sm-12">
+                                            <h4 class="brief"><i>Company Info</i></h4>
+                                            <div class="left col-sm-7">
+                                                <h2><i class="fa fa-building"></i>@Model.Name</h2>
+                                                <p><i class="fa fa-user"></i>@Model.PersonContact</p>
+                                                @*<p><strong>About: </strong> Web Designer / UI. </p>*@
+                                                <ul class="list-unstyled">
+                                                    @if (ViewData["Phoneitem"] != null)
+                                                    {
+                                                        foreach (Company_Phone d in (List<Project.Models.Company_Phone>)ViewData["Phoneitem"])
+                                                        {
+                                                            @if (d.COMP_ID == @Model.ID)
+                                                            {<li><i class="fa fa-phone"></i>@d.Phone </li>}
+
+                                                        }
+                                                    }
+                                                    
+                                                  @*  <li><i class="fa fa-phone"></i> Phone #: </li>*@
+                                                </ul>
+                                            </div>
+                                            <div class="right col-sm-5 text-center">
+                                                @*<img src="images/user.png" alt="" class="img-circle img-fluid">*@
+                                            </div>
+                                        </div>
+                                        <div class=" bottom text-center">
+                                            <div class=" col-sm-6 emphasis">
+                                                @*<p class="ratings">
+                                                    <a>4.0</a>
+                                                    <a href="#"><span class="fa fa-star"></span></a>
+                                                    <a href="#"><span class="fa fa-star"></span></a>
+                                                    <a href="#"><span class="fa fa-star"></span></a>
+                                                    <a href="#"><span class="fa fa-star"></span></a>
+                                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                                </p>*@
+                                            </div>
+                                            <div class=" col-sm-6 emphasis">
+                                                <a asp-action="AddPhone" asp-route-id="@Model.ID" class="btn btn-success btn-sm">
+                                                    <i class="fa fa-phone"></i>
+                                                    Add Phone
+                                                </a>
+                                                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-info btn-sm">
+                                                    <i class="fa fa-pencil"></i>
+                                                    Edit Company
+                                                </a>
+                                                <a  asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash-o"> </i> Delete Company
+                                                </a>
+                                            </div>
+                                        </div>
+                                         <a  asp-action="Index" >
+                                                    <i class="fa fa-hand-o-left"></i> Back
+                                                </a>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                               @* <h1>Category Details</h1>
+                                <hr />*@
+                                @*<div>
+                                <h5> Category ID </h5>
+                                <p> @Model.Id</p>
+
+                                </div>*@
+                              @*  <div>
+                                    <h5> Category Name : </h5>
+                                    <p style="font-size:20px"> @Model.Name</p>
+
+                                </div>
+                                <div>*@
+                                   @* <div>
+                                        <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.ID">Edit category</a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-info" asp-action="Create" asp-controller="SubCategory" asp-route-id="@Model.ID">Add Category </a>
+                                    </div>
+                                    <div>
+                                        <a asp-action="Index" class="backbtn">Back to List</a>
+                                    </div>*@
+
+                               @* </div>*@
+
+                            </div>
+                            <!-- /MAIL LIST -->
+                            <!-- CONTENT MAIL -->
+                            <div class="col-sm-7 mail_view">
+                                <div class="inbox-body">
+                                </div>
+
+                                <table id="datatable" class="table table-hover  table-striped" role="grid" aria-describedby="datatable_info">
+                                    <thead>
+                                            <tr>
+                                                <th> Phone</th>
+                                                <th colspan="2"></th>
+                                            </tr>
+                                        </thead>
+                                    <tbody>
+                                         
+                                        @if(ViewData["Phoneitem"]!=null){
+                                             foreach (Company_Phone d in (List<Project.Models.Company_Phone>)ViewData["Phoneitem"])
+                                                {
+                                                    @if (d.COMP_ID == @Model.ID)
+                                                    {
+                                                        <tr>
+                                                            <td><i class="fa fa-phone"></i>@d.Phone</td>
+                                                            <td><a class="btn btn-info" asp-action="Editphone" asp-route-phone="@d.Phone" asp-route-id="@d.id"><i class="fa fa-pencil"></i></a></td>
+                                                            <td><a class="btn btn-danger" asp-action="DeletePhone" onclick="return DeleteItem()" asp-route-phone="@d.Phone" asp-route-id="@d.id"><i class="fa fa-trash-o"></i></a></td>
+                                                          
+                                                         </tr>
+                                                    }
+                                                }
+                                        }
+                                        else{<tr class="Nosubcatmsg"> Sorry thete is No Phone For this Company !</tr>  }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /CONTENT MAIL -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+<div>
+    <h4>Company</h4>
+    <hr />
+
+    <table class="table table-info table-striped">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.PersonContact)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.PersonContact)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.company_Phones)
+            </td>
+            <td>
+                @foreach (Company_Phone d in (List<Project.Models.Company_Phone>)ViewData["Phoneitem"])
+                {
+                    @if (@d.COMP_ID == @Model.ID)
+                    {
+                        <div class="row">
+                            <div class=" col-2"><option value="@d.COMP_ID" selected>@d.Phone</option></div>
+                            <div class=" col-2"><a class="btn btn-secondary" selected asp-action="Editphone" asp-route-phone="@d.Phone" asp-route-id="@d.id">Editphone</a></div>
+                            <div class=" col-2"><a class="btn btn-danger" selected asp-action="DeletePhone" onclick="return DeleteItem()" asp-route-phone="@d.Phone" asp-route-id="@d.id">DeletePhone</a></div>
+
+                        </div>
+
+
+
+
+
+
+                    }
+                }
+            </td>
+        </tr>
+
+    </table>
+    </div>
+
+*@
+
+
+
+
+
+
+
+
+@*
+
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonContact)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonContact)
+        </dd>
+
+
+      
+    </dl>
+
+    <div class="row">
+        <div class=" col-2">
+            @Html.DisplayNameFor(model => model.company_Phones)
+
+        </div>
+        <div class=" col-8">
+            @foreach (Company_Phone d in (List<Project.Models.Company_Phone>)ViewData["Phoneitem"])
+            {
+                @if (@d.COMP_ID == @Model.ID)
+                {
+                    <div class="row">
+                        <div class=" col-2"><option value="@d.COMP_ID" selected>@d.Phone</option></div>
+                        <div class=" col-2"><a class="btn btn-secondary" selected asp-action="Editphone" asp-route-phone="@d.Phone" asp-route-id="@d.id">Editphone</a></div>
+                        <div class=" col-2"><a class="btn btn-danger" selected asp-action="DeletePhone" asp-route-phone="@d.Phone" asp-route-id="@d.id">DeletePhone</a></div>
+                        
+                    </div>
+
+                
+                 
+
+
+
+                }
+            }
+        </div>
+    </div>
+
+
+    
+</div>*@
+@*<div>
+    <br />
+    <a class="btn btn-light" asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a  class="btn btn-light" asp-action="Index">Back to List</a>
+</div>*@
+    <script type="text/javascript">
+        function DeleteItem() {
+            if (confirm("Are you sure you want to delete ...?")) {
+                return true;
+            }
+            return false;
+        }
+    </script>

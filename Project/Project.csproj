@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Categories\Create.cshtml" />
+    <None Include="Views\Categories\Delete.cshtml" />
+    <None Include="Views\Categories\Details.cshtml" />
+    <None Include="Views\Categories\Edit.cshtml" />
+    <None Include="Views\Purchasing\add.cshtml" />
+    <None Include="Views\Purchasing\addPurchasingProduct.cshtml" />
+    <None Include="Views\Purchasing\addQuantity.cshtml" />
+    <None Include="Views\Purchasing\Detail.cshtml" />
+    <None Include="Views\Purchasing\editPurchaching.cshtml" />
+    <None Include="Views\Purchasing\editQuantity.cshtml" />
+    <None Include="Views\Purchasing\_subCategories.cshtml" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\CODEOWNERS" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\CONTRIBUTING.md" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug.md" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\ISSUE_TEMPLATE\bug_report.md" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\ISSUE_TEMPLATE\feature.md" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\ISSUE_TEMPLATE\feature_request.md" />
+    <None Include="wwwroot\CustomLayout\vendors\bootstrap\.github\SUPPORT.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
+</Project>

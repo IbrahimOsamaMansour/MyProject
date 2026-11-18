@@ -1,0 +1,119 @@
+﻿@model Project.ViewModel.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body style="padding:5px; margin:0;" class="loginbody">
+    <div class="gradient-custom-3" style="margin:0;">
+        <div style="padding:1px"></div>
+        <div class="main">
+            <section class="signup">
+                <div class="container ">
+                    <div class="signup-content" style="padding: 30px 80px;  height:85%; width: 60%; margin-top:20px;margin-left:8%;">
+                        <form method="POST" asp-action="Registration" style="padding-top:15%;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <h2>CREATE ACCOUNT </h2>
+                            <div class="form-group">
+                                <input asp-for="Username" class="form-input form-control" placeholder="Your Name" />
+                                <span style="color:red" asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="password" class="form-input form-control" placeholder="Password" />
+                                <span style="color:red" asp-validation-for="password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Confirmpassword" class="form-input form-control" placeholder="Confirm Password" />
+                                <span style="color:red" asp-validation-for="Confirmpassword" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="address" class="form-input form-control" placeholder="Your Address" />
+                                <span style="color:red" asp-validation-for="address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" class="form-submit" value="Register" />
+                            </div>
+                        </form>
+                        <p class="loginhere">
+                            Have already an account ? <a asp-action="Login" class="loginhere-link">Login here</a>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+</html>
+
+@*@model Project.ViewModel.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<h1>Registration</h1>
+
+<h4>RegisterUserViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Registration">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="password" class="control-label"></label>
+                <input asp-for="password" class="form-control" />
+                <span asp-validation-for="password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Confirmpassword" class="control-label"></label>
+                <input asp-for="Confirmpassword" class="form-control" />
+                <span asp-validation-for="Confirmpassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@*<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
+ 

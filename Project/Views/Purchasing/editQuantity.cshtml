@@ -1,0 +1,105 @@
+﻿@model PurchasingQuantityViewModel
+
+@{
+    ViewData["Title"] = "editQuantity";
+	Layout = "~/Views/Shared/_CustomLayout.cshtml";
+	SelectList quantitynits = new SelectList(Model.units);
+}
+
+<h1>editQuantity</h1>
+
+<div class="clearfix"></div>
+<div class="row">
+	<div class="col-md-12 col-sm-12 ">
+		<div class="x_panel">
+			<div class="x_title">
+				<h2>Form Design </h2>
+				<ul class="nav navbar-right panel_toolbox">
+					<li>
+						<a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+					</li>
+					<li>
+						<a class="close-link"><i class="fa fa-close"></i></a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+
+
+			<div class="x_content">
+				<br />
+				@if (ViewBag.fail != null)
+				{
+					<h4 class="alert alert-danger">Sorry Insert Purchasing is Fail! </h4>
+				}
+
+
+				<div id="wizard" class="form_wizard wizard_horizontal">
+
+					<form asp-action="editQuantity" method="post" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+						<input asp-for="Purch_id" hidden />
+						<input asp-for="ID" hidden />
+						<div class="item form-group">
+							<label asp-for="ValueQuantity" class="col-form-label col-md-3 col-sm-3 label-align" for="ValueQuantity"> Value Quantity
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								<input type="text" asp-for="ValueQuantity" class="form-control">
+								<span style="color:red" asp-validation-for="ValueQuantity"></span>
+								@if (TempData["valQua"] != null)
+								{
+									<p style="color:red">@TempData["valQua"]</p>
+								}
+							</div>
+						</div>
+
+						<div class="item form-group">
+							<label class="col-form-label col-md-3 col-sm-3 label-align" for="UnitQuantity"> Unit Quantity
+								<span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 ">
+								@if (quantitynits.Count() == 0)
+								{
+									<select class="form-control" id="UnitQuantity">
+										<option value="null">No Unite quantity </option>
+
+									</select>
+								}
+								else
+								{
+									<select class="form-control" asp-for="UnitQuantity" asp-items="quantitynits">
+										<option value="null"> -- choose unite -- </option>
+
+									</select>
+								}<span style="color:red" asp-validation-for="UnitQuantity"></span>
+							</div>
+						</div>
+
+
+
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="col-md-6 col-sm-6 offset-md-3">
+								<button type="submit" class="btn btn-success">Edit</button>
+							</div>
+						</div>
+
+					</form>
+
+					<div class="ln_solid"></div>
+					
+
+					<div class="col-md-6 col-sm-6 offset-md-3"></div>
+					<div class="item form-group" style="float: left">
+						<div class="col-md-6 col-sm-6 offset-md-3">
+							<a asp-action="Detail" asp-route-id="@Model.Purch_id" class="btn btn-success ">Back to Detail <i class="fa fa-hand-o-left"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+

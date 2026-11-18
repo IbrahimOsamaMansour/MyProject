@@ -1,0 +1,260 @@
+﻿@model List<Project.Models.Company>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+       int x = 1;
+                        
+}
+<style>
+    .ms-n5 {
+        margin-left: -40px;
+    }</style>
+    <br />
+<h1 style="font-weight:bolder ; color:#2a3f54"> Companys</h1>
+<br />
+@if (TempData["delsuc"] != null)
+{
+    <h4 class="alert alert-success">@TempData["delsuc"]</h4>
+}
+
+
+
+@*==============================================*@
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12  ">
+    <div class="x_panel">
+        <div class="x_title ">
+          <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+             
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+
+        <div class="x_content">
+            <div class="row"> 
+                <h3 class="col-7">
+                    <a class="btn btn-info " asp-action="Create">Add Company</a>
+                </h3>
+               
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <table class="table table-hover cd-table order-table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Company Name</th>
+                        <th>Person Contact</th>
+                        <th>Phone Companye</th>
+                        <th></th>
+                       
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>
+
+                                @(x++)
+                            </th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PersonContact)
+                            </td>
+
+                            @if (item.company_Phones.Count != 0)
+                            {
+                                <td>
+                                    @foreach (Company_Phone itemquantity in item.company_Phones)
+                                    {
+                                        <p>@itemquantity.Phone  </p>
+
+                                    }
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                            }
+
+                            <td>
+
+                                <a class="btn btn-outline-primary" asp-action="AddPhone" asp-route-id="@item.ID">Add Phone</a>
+                                <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a> 
+
+                                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.ID">Details</a> 
+                                @*<a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@*===============================================*@
+@*<section class="container cd-table-container">
+    <h2 class="cd-title">Search Table Record:</h2>
+  <input type="text" class="cd-search table-filter" data-table="order-table" placeholder="Item to filter.." />
+
+   
+
+    <div class="col-4">
+        <div class="input-group">
+            <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="button" class="btn btn-outline-info">search</button>
+        </div>
+    </div>
+  
+  
+<p>
+        <br />
+        <a class="btn btn-info" asp-action="Create">Create New</a>
+</p>
+
+    <table class="cd-table order-table table" >
+    <thead>
+        <tr>
+                <th>
+                    ID
+                </th>
+             <th>
+                Company Name
+            </th>
+            <th>
+                Person Contact
+            </th>
+                <th>
+                    Phone Company
+                </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                    <th>
+                        
+                        @(x++)
+                    </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonContact)
+                </td>
+                    
+                        @if (item.company_Phones.Count != 0)
+                        {
+                        <td>
+                                @foreach (Company_Phone itemquantity in item.company_Phones)
+                                {
+                                <p>@itemquantity.Phone </p>
+                                
+                                }
+                        </td>
+                        }
+                        else
+                        {
+                        <td></td>
+                        }
+                    
+                <td>
+                    
+                        <a class="btn btn-primary" asp-action="AddPhone" asp-route-id="@item.ID">Add Phone</a>|
+                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+
+                    <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</section>
+*@
+@section SearchCompany{
+
+
+
+    <script>
+        (function () {
+            'use strict';
+
+            var TableFilter = (function () {
+                var Arr = Array.prototype;
+                var input;
+
+                function onInputEvent(e) {
+                    input = e.target;
+                    var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                    Arr.forEach.call(table1, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, filter);
+                        });
+                    });
+                }
+
+                function filter(row) {
+                    var text = row.textContent.toLowerCase();
+                    //console.log(text);
+                    var val = input.value.toLowerCase();
+                    //console.log(val);
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = onInputEvent;
+                        });
+                    }
+                };
+
+            })();
+
+            /*console.log(document.readyState);
+              document.addEventListener('readystatechange', function() {
+                  if (document.readyState === 'complete') {
+                console.log(document.readyState);
+                      TableFilter.init();
+                  }
+              }); */
+
+            TableFilter.init();
+        })();
+
+    </script>
+}

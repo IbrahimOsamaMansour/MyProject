@@ -1,0 +1,158 @@
+﻿@model Project.Models.Category
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    int x = 1;
+}
+<link rel="stylesheet" href="~/css/ProjectStyle.css">
+<style>
+   body{
+          color: #081726;
+   }
+</style>
+
+@*<!DOCTYPE html>
+<head>
+    <!-- Bootstrap -->
+    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- bootstrap-wysiwyg -->
+    <link href="../vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+
+    <!-- Custom styling plus plugins -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+</head>*@
+
+@*<body class="nav-md">*@
+    <div class="container body">
+        <div class="main_container">
+
+            @if (TempData["proudcthasSubCategory"] != null)
+            {
+                <h4 class="alert alert-info">TempData["proudcthasSubCategory"]</h4>
+            }
+            @if (TempData["purchashasSubCategory"] != null)
+            {
+                <h4 class="alert alert-info">TempData["proudcthasSubCategory"]</h4>
+            }
+            @if (TempData["DelSubDone"] != null)
+            {
+                <h4 class="alert alert-info">TempData["proudcthasSubCategory"]</h4>
+            }
+         
+            <!-- page content -->
+            <div role="main">
+                <div class="">
+                    <div class="clearfix"></div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="x_panel">
+                               
+                                <div class="x_content">
+                                    <div class="row">
+                                        <div class="col-sm-3 mail_list_column">
+
+                                            <h1>Category Details</h1>
+                                            <hr />
+                                                @*<div>
+                                                    <h5> Category ID </h5>
+                                                    <p> @Model.Id</p>
+
+                                                </div>*@
+                                                <div>
+                                                    <h5> Category Name : </h5>
+                                                    <p style="font-size:20px"> @Model.Name</p>
+
+                                                </div>
+                                            <div>
+                                                <div>
+                                                    <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Id">Edit category</a>
+                                                </div>
+                                                <div>
+                                                    <a class="btn btn-info" asp-action="Create" asp-controller="SubCategory" asp-route-id="@Model.Id">Add SubCategory </a>
+                                                </div>
+                                                <div>
+                                                    <a asp-action="Index" class="backbtn">Back to List</a>
+                                                </div>
+
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- /MAIL LIST -->
+                                        <!-- CONTENT MAIL -->
+                                        <div class="col-sm-9 mail_view">
+                                            <div class="inbox-body">
+                                               
+                                            </div>
+
+                                            <table id="datatable" class="table table-hover  table-striped   " role="grid" aria-describedby="datatable_info">
+                                                
+                                                <tbody>
+                                                    @if (Model.SubCategories.Count != 0)
+                                                    {
+                                                    <thead>
+                                                        <tr>
+                                                            <th> ID</th>
+                                                            <th>Sub-Categories</th>
+                                                           
+                                                        </tr>
+                                                    </thead>
+                                                        
+
+                                                        @foreach (Category item in Model.SubCategories)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @(x++)
+                                                                </td>
+                                                                <td><option value="@item.Id" selected>@item.Name</option></td>
+                                                                @*<td>
+                                                                    <a asp-action="DeleteSubCategory" class="btn btn-outline-danger" asp-route-id="@item.Id" asp-route-idCategory="@item.Suc_Categ_Id">Delete</a>
+                                                                </td>*@
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <tr class="Nosubcatmsg"> Sorry thete is No Sub Categories For this Category !</tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /CONTENT MAIL -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /page content -->
+            
+        </div>
+    </div>
+@*
+    <!-- jQuery -->
+    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- FastClick -->
+    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../vendors/nprogress/nprogress.js"></script>
+    <!-- bootstrap-wysiwyg -->
+    <script src="../vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="../vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="../vendors/google-code-prettify/src/prettify.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../build/js/custom.min.js"></script>*@
+
+@*</body>*@
+@*</html>*@

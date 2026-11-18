@@ -1,0 +1,166 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Stock</h3>
+    </div>
+
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+          @*  <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+            </div>*@
+        </div>
+    </div>
+</div>
+
+
+<div class="clearfix"></div>
+
+<div class="col-md-12 col-sm-12 ">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Products In stock </h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <h4 class="col-7"><a asp-action="add" class="btn btn-info btn-lg">Add Product</a></h4>
+                <div class="col-5" style="padding-top: 10px">
+                    <div class="input-group">
+                        <input type="search" data-table="order-table" placeholder="Item to filter.." class=" table-filter form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        <button type="button" class="btn btn-outline-info">search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box table-responsive">
+                        
+                        <div id="datatable-buttons_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap no-footer">
+                            @*<div class="dt-buttons btn-group"><a class="btn btn-default buttons-copy buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Copy</span></a><a class="btn btn-default buttons-csv buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>CSV</span></a><a class="btn btn-default buttons-excel buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Excel</span></a><a class="btn btn-default buttons-pdf buttons-html5 btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>PDF</span></a><a class="btn btn-default buttons-print btn-sm" tabindex="0" aria-controls="datatable-buttons" href="#"><span>Print</span></a></div><div class="dataTables_length" id="datatable-buttons_length"><label>Show <select name="datatable-buttons_length" aria-controls="datatable-buttons" class="form-control input-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="datatable-buttons_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="datatable-buttons"></label></div>*@
+                             @if(TempData["sucDelete"] != null){<h4 class="alert alert-info">@TempData["sucDelete"]</h4>}
+                            
+                            <table id="datatable-buttons" class="table table-hover cd-table order-table table-striped" style="width: 100%;" role="grid" aria-describedby="datatable-buttons_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th >Model Name</th>
+                                        <th>Company</th>
+                                        <th>Category</th>
+                                        <th>SubCategory</th>
+                                        <th >Quntity </th>
+                                        <th>Reserved Quantity</th>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+
+
+                                <tbody>
+                                    @if(Model.Count !=0){
+                                        foreach (var item in Model)
+                                        {
+                                            <tr role="row" class="odd">
+                                                <td class="sorting_1" tabindex="0">@item.ModelName</td>
+                                                @if(item.company != null){ <td>@item.company.Name </td>}
+                                                else{<td>---</td>}
+                                                 @if(item.category != null){ <td>@item.category.Name </td>}
+                                                else{<td>---</td>} 
+                                                @if(item.subcategory != null){ <td>@item.subcategory.Name </td>}
+                                                else{<td>---</td>}
+                                                @if (item.Product_Quantities.Count != 0)
+                                                {
+                                                    <td>
+                                                        @foreach (Product_Quantity itemquantity in item.Product_Quantities)
+                                                        {
+                                                            <p>@itemquantity.ValueQuantity  @itemquantity.UnitQuantity</p>
+                                                            <p>--------</p>
+                                                        }
+                                                    </td>
+                                                }else{<td></td>}
+                                                  @if(item.ReservedQuantity != null){ <td><a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-success"> @item.ReservedQuantity </a></td>}
+                                                else{<td>---</td>}
+                                                <td> <a asp-action="Detail" asp-route-id="@item.Id" class="btn btn-success">Details</a></td>
+                                                <td> <a asp-action="editProduct" asp-route-id="@item.Id" class="btn btn-primary">Edit</a></td>
+                                            </tr>
+                                        }
+                                    }
+                                   
+                                    
+
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        (function () {
+            'use strict';
+
+            var TableFilter = (function () {
+                var Arr = Array.prototype;
+                var input;
+
+                function onInputEvent(e) {
+                    input = e.target;
+                    var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+                    Arr.forEach.call(table1, function (table) {
+                        Arr.forEach.call(table.tBodies, function (tbody) {
+                            Arr.forEach.call(tbody.rows, filter);
+                        });
+                    });
+                }
+
+                function filter(row) {
+                    var text = row.textContent.toLowerCase();
+                    //console.log(text);
+                    var val = input.value.toLowerCase();
+                    //console.log(val);
+                    row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+                }
+
+                return {
+                    init: function () {
+                        var inputs = document.getElementsByClassName('table-filter');
+                        Arr.forEach.call(inputs, function (input) {
+                            input.oninput = onInputEvent;
+                        });
+                    }
+                };
+
+            })();
+
+            /*console.log(document.readyState);
+              document.addEventListener('readystatechange', function() {
+                  if (document.readyState === 'complete') {
+                console.log(document.readyState);
+                      TableFilter.init();
+                  }
+              }); */
+
+            TableFilter.init();
+        })();
+
+    </script>

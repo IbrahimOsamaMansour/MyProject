@@ -199,7 +199,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Employee_ID");
 
-                    b.ToTable("Bill");
+                    b.ToTable("Bill", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Category", b =>
@@ -222,7 +222,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Suc_Categ_Id");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Company", b =>
@@ -244,7 +244,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Company");
+                    b.ToTable("Company", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Company_Phone", b =>
@@ -265,7 +265,7 @@ namespace Project.Migrations
 
                     b.HasIndex("COMP_ID");
 
-                    b.ToTable("Company_Phone");
+                    b.ToTable("Company_Phone", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Emp_Attendance", b =>
@@ -292,7 +292,7 @@ namespace Project.Migrations
 
                     b.HasIndex("workerID");
 
-                    b.ToTable("Emp_Attendance");
+                    b.ToTable("Emp_Attendance", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Emp_Salary", b =>
@@ -322,7 +322,7 @@ namespace Project.Migrations
 
                     b.HasIndex("WorkerID");
 
-                    b.ToTable("Emp_Salarie");
+                    b.ToTable("Emp_Salarie", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Employee", b =>
@@ -426,7 +426,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Item_Ex_ID");
 
-                    b.ToTable("Expense");
+                    b.ToTable("Expense", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Item_Expenses", b =>
@@ -444,7 +444,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("item_Expenses");
+                    b.ToTable("item_Expenses", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Payed_quantity", b =>
@@ -468,7 +468,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Bill_ID");
 
-                    b.ToTable("payed_Quantity");
+                    b.ToTable("payed_Quantity", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Product", b =>
@@ -517,7 +517,7 @@ namespace Project.Migrations
 
                     b.HasIndex("subCateg_id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Product_Bill", b =>
@@ -559,7 +559,7 @@ namespace Project.Migrations
 
                     b.HasIndex("product_ID");
 
-                    b.ToTable("Product_Bill");
+                    b.ToTable("Product_Bill", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Product_Purchasing", b =>
@@ -582,7 +582,7 @@ namespace Project.Migrations
 
                     b.HasIndex("product_Id");
 
-                    b.ToTable("product_Purchasing");
+                    b.ToTable("product_Purchasing", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Product_Quantity", b =>
@@ -606,7 +606,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Prod_Id");
 
-                    b.ToTable("product_Quantity");
+                    b.ToTable("product_Quantity", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Purchasing", b =>
@@ -666,7 +666,7 @@ namespace Project.Migrations
 
                     b.HasIndex("subCateg_id");
 
-                    b.ToTable("purchasing");
+                    b.ToTable("purchasing", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Purchasing_Quantity", b =>
@@ -690,7 +690,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Purch_id");
 
-                    b.ToTable("Purchasing_Quantity");
+                    b.ToTable("Purchasing_Quantity", (string)null);
                 });
 
             modelBuilder.Entity("Project.Models.Workers", b =>
@@ -717,7 +717,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("workers");
+                    b.ToTable("workers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

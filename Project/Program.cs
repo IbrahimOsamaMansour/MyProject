@@ -19,11 +19,10 @@ builder.Services.AddControllersWithViews();
 
 
 //to register service of injection DbContext in classer
-builder.Services.AddDbContext<ElQasrDbContext>(
-                                                OptionsBuilder =>
-                                                    {
-                                                        OptionsBuilder.UseSqlServer("myDB");
-                                                    });
+builder.Services.AddDbContext<ElQasrDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("myDB")
+    )); 
 
 // register for servic for identity of Microsoft
 builder.Services.AddIdentity<Employee, IdentityRole<int>>(

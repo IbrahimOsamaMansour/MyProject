@@ -43,9 +43,6 @@ namespace Project.Models
         //}   32 *200 ,,, 14*100
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=DESKTOP-9EJNCNT; Database=ElQasrDB;Trusted_Connection=True;");
-        }
+      
     }
 }

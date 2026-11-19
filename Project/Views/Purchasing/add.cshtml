@@ -198,14 +198,20 @@
 
 @section script{
 	<script>
+		var subcategoryUrl = '@Url.Action("getsubcategorys", "Purchasing")';
+
 		function categchang() {
 			
 			var categoryselect = document.getElementById("Categ_id");
 			var divsubcateg = document.getElementById("divsubcateg");
+			if (!categoryselect.value || categoryselect.value === "0") {
+				divsubcateg.innerHTML = "";
+				return;
+			}
 
 			//console.log(categoryselect.value);
 			$.ajax({
-				url: "http://localhost:5233/Purchasing/getsubcategorys/"+categoryselect.value,
+				url: subcategoryUrl + "/" + encodeURIComponent(categoryselect.value),
 				method: "post",
 				success: function (result) {
 					console.log(result);

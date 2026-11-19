@@ -9,10 +9,15 @@ namespace Project.Models
 
             if (value == null)
                 return null;
-            string newCatName = value.ToString();
-            ElQasrDbContext context = new ElQasrDbContext();
-            Workers cat = context.workers.FirstOrDefault(c => c.Name == newCatName);
-            if (cat != null)
+            string workerName = value.ToString()!;
+            var context = validationContext.GetService(typeof(ElQasrDbContext)) as ElQasrDbContext;
+            if (context == null)
+            {
+                throw new InvalidOperationException("ElQasrDbContext is not available for worker name validation.");
+            }
+
+            Workers? existingWorker = context.workers.FirstOrDefault(c => c.Name == workerName);
+            if (existingWorker != null)
             {
                 return new ValidationResult("this Name is already Exist !");
             }

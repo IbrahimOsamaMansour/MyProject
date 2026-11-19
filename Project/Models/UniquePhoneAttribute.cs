@@ -7,12 +7,17 @@ namespace Project.Models
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
 
-            if(value==null)
+            if (value == null)
                 return null;
-            string newCatphone = value.ToString();
-            ElQasrDbContext context = new ElQasrDbContext();
-          Company_Phone cat= context.Company_Phone.FirstOrDefault(c=>c.Phone== newCatphone);
-            if (cat!=null)
+            string newCatphone = value.ToString()!;
+            var context = validationContext.GetService(typeof(ElQasrDbContext)) as ElQasrDbContext;
+            if (context == null)
+            {
+                throw new InvalidOperationException("ElQasrDbContext is not available for phone validation.");
+            }
+
+            Company_Phone? companyPhone = context.Company_Phone.FirstOrDefault(c => c.Phone == newCatphone);
+            if (companyPhone != null)
             {
                 return new ValidationResult("this phone is already Exist !");
             }

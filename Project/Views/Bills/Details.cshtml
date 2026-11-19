@@ -3,9 +3,8 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
-    double totalpayed = 0.0;
-    double? remainingQ = 0.0;
-    double? x = Model.Total_Price;
+    double totalpayed = Model.PayedQuantities?.Sum(p => (double)p.value) ?? 0.0;
+    double? remainingQ = Model.Total_Price - totalpayed;
 }
 
 
@@ -14,6 +13,11 @@
     <div class="page-title">
         <div class="title_left">
             <h3>Invoice</h3>
+        </div>
+        <div class="title_right no-print">
+            <button type="button" class="btn btn-primary" onclick="window.print();">
+                <i class="fa fa-print"></i> Print / Save as PDF
+            </button>
         </div>
 
        @* <div class="title_right">
@@ -32,10 +36,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="x_panel">
+            <div class="x_panel invoice-print">
                 <div class="x_title">
                     <h2>Invoice <small>to Ceramic trade </small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
+                    <ul class="nav navbar-right panel_toolbox no-print">
                         <li>
                             <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -53,10 +57,10 @@
                             <div class="  invoice-header">
                                 
                             @if(TempData["resultDeleteProduct"] != null){
-                                <h5 class="alert alert-info">@TempData["resultDeleteProduct"]</h5>
+                                <h5 class="alert alert-info no-print">@TempData["resultDeleteProduct"]</h5>
                             }
                             @if (TempData["resultConfirm"] != null){
-                                <h5 class="alert alert-info">@TempData["resultConfirm"]</h5>
+                                <h5 class="alert alert-info no-print">@TempData["resultConfirm"]</h5>
                             }
                                 <h1>
                                     <i class="fa fa-globe"></i> Invoice.
@@ -113,10 +117,11 @@
 										    <th>Qty</th>
                                             <th>Product</th>
 										    <th>unit price </th>
-										    <th>product is sold </th>
-										    <th>Sell Date </th>
-										    <th>Book Date </th>										
-										    <th colspan="3"></th>
+                                            <th>Total</th>
+                                            <th class="screen-only">product is sold</th>
+                                            <th class="screen-only">Sell Date</th>
+                                            <th class="screen-only">Book Date</th>
+                                            <th class="no-print"></th>
 
                                         </tr>
                                     </thead>
@@ -127,17 +132,18 @@
                                                <tr>
                                                     <td>@item.Quantity @item.unit_Quantity</td>
                                                     <td>@item.product.ModelName</td>
-                                                    <td>@item.unit_Price</td>
-                                                    <td>@item.Resv_Q_State</td>
-                                                    <td>@item.Sell_Date </td>
-                                                    <td>@item.Book_Date </td>
-                                                    <td> <a asp-action="Delete" asp-controller="BillProduct" asp-route-id="@item.ID" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
+                                                    <td>@item.unit_Price LE</td>
+                                                    <td>@(((item.unit_Price ?? 0) * (item.Quantity ?? 0)).ToString("0.##")) LE</td>
+                                                    <td class="screen-only">@item.Resv_Q_State</td>
+                                                    <td class="screen-only">@item.Sell_Date</td>
+                                                    <td class="screen-only">@item.Book_Date</td>
+                                                    <td class="no-print"> <a asp-action="Delete" asp-controller="BillProduct" asp-route-id="@item.ID" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
                                                 
                                              </tr>
                                         }
                                      
                                     }else{
-                                        <tr> <td colspan="9" style="text-align:center" > Sorry there is No Product in Invoice</td></tr>
+                                        <tr> <td colspan="8" style="text-align:center" > Sorry there is No Product in Invoice</td></tr>
                                     }
                                        
                                     </tbody>
@@ -175,18 +181,9 @@
                                                     <tr>
                                                         <th id="valueId">@payeditem.value LE </th>
                                                         <td>@payeditem.Date_Payed</td>
-                                                        <td><a asp-action="Edit" asp-controller="payedQuantity" asp-route-id="@payeditem.ID" class="btn btn-info">Edit</a></td>
-                                                        <td> <a asp-action="Delete" asp-controller="payedQuantity" asp-route-id="@payeditem.ID" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
+                                                        <td class="no-print"><a asp-action="Edit" asp-controller="payedQuantity" asp-route-id="@payeditem.ID" class="btn btn-info">Edit</a></td>
+                                                        <td class="no-print"> <a asp-action="Delete" asp-controller="payedQuantity" asp-route-id="@payeditem.ID" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
                                                     </tr>
-                                                     @if (payeditem.value != null)
-                                                        {
-
-                                                            totalpayed += payeditem.value;
-                                                        }
-                                                        @if (payeditem.value != null && payeditem.bill.Total_Price != null)
-                                                        {
-                                                            remainingQ = payeditem.bill.Total_Price - totalpayed;
-                                                        }
                                                 }
                                             }else{
                                                 <tr><td colspan="4" style="text-align:center"sty><h4> Sorry ,there is no payed Quantity yet ! </h4></td></tr>
@@ -219,11 +216,11 @@
                                     </table>
                                      @if (totalpayed >= Model.Total_Price)
                                         { 
-                                        <button disabled class="btn btn-primary pull-right" style="margin-right: 5px;" asp-controller="payedQuantity" asp-action="Create" asp-route-id="@Model.ID"> <i class="fa fa-credit-card"></i> Add new payed Quanit</button>
+                                        <button disabled class="btn btn-primary pull-right no-print" style="margin-right: 5px;" asp-controller="payedQuantity" asp-action="Create" asp-route-id="@Model.ID"> <i class="fa fa-credit-card"></i> Add new payed Quanit</button>
                                         }
                                         else
                                         {
-                                            <a class="btn btn-primary pull-right" style="margin-right: 5px;" asp-controller="payedQuantity" asp-action="Create" asp-route-id="@Model.ID"><i class="fa fa-credit-card"></i>Add new payed Quanity </a>
+                                            <a class="btn btn-primary pull-right no-print" style="margin-right: 5px;" asp-controller="payedQuantity" asp-action="Create" asp-route-id="@Model.ID"><i class="fa fa-credit-card"></i>Add new payed Quanity </a>
                                         }
                                   
                                 </div>
@@ -258,9 +255,11 @@
 </div>
 <br>
 <br />
-<a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-<a class="btn btn-secondary" asp-action="Index">Back to List</a>|
-<a class="btn btn-danger" asp-action="Delete"  asp-route-id="@Model.ID">Delete</a>
+<div class="no-print">
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a> |
+    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@Model.ID">Delete</a>
+</div>
 
 @*
 
@@ -487,4 +486,3 @@
 </div>
 *@
 <br>
-<button class="btn btn-default"  onclick="window.print();"><i class="fa fa-print"></i> Print</button>

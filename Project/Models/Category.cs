@@ -12,7 +12,7 @@ namespace Project.Models
             SubCategories = new List<Category>();
         }
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "The category Name field is required.")]
         [MaxLength(100)]
         [MinLength(2)]
         [Display(Name="category Name ")]

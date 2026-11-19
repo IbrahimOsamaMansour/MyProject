@@ -61,7 +61,7 @@ namespace Project.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Please Select Category");
+                    ModelState.AddModelError(nameof(category.Suc_Categ_Id), "Please select a category.");
                 }
                 
             }

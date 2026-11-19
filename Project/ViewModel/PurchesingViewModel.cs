@@ -12,8 +12,6 @@ namespace Project.ViewModel
         public string ModelName { get; set; }
         public int? Number { get; set; }
         public double? TotalPrice { get; set; }
-        public double? UnitPrice { get; set; }
-
         [StringLength(200)]
         public string? Description { get; set; }  
         public string? BillNum { get; set; }

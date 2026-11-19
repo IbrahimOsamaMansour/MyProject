@@ -13,5 +13,6 @@ namespace Project.Repository
         int insert(Purchasing newperchasing);
         int update(Purchasing editperchasing);
         int delete(int id);
+        int RecalculateTotalPrice(int purchasingId);
     }
 }

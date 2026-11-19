@@ -13,6 +13,10 @@ namespace Project.ViewModel
         public int Product_id { get; set; }
         [Required]
         public int ValueQuantity { get; set; }
+        [Range(0.01, double.MaxValue, ErrorMessage = "Unit price must be greater than zero.")]
+        public double? UnitPrice { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Unit cost cannot be negative.")]
+        public double? UnitCost { get; set; }
         [Required]
         public string UnitQuantity { get; set; }
         public List<string>? units { get; set; }

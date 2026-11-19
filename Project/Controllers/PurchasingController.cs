@@ -87,8 +87,7 @@ namespace Project.Controllers
                     Name = newpurchesing.Name,
                     BillNum = newpurchesing.BillNum,
                     Number = newpurchesing.Number,
-                    TotalPrice = newpurchesing.TotalPrice,
-                    UnitPrice = newpurchesing.UnitPrice,
+                    TotalPrice = 0,
                     Comp_id = newpurchesing.Comp_id,
                     Description = newpurchesing.Description,
                     DateSell = DateTime.Now,
@@ -134,7 +133,6 @@ namespace Project.Controllers
             newpurchesing.BillNum = p.BillNum;
             newpurchesing.Description = p.Description;
             newpurchesing.TotalPrice = p.TotalPrice;
-            newpurchesing.UnitPrice = p.UnitPrice;                
 
             
             if(p.Categ_id != null) { newpurchesing.Categ_id = (int)p.Categ_id; newpurchesing.subCategories = subCategoryRepo.getAllByID((int)p.Categ_id); }
@@ -155,9 +153,7 @@ namespace Project.Controllers
                     ModelName = editpurchesing.ModelName,
                     Number = editpurchesing.Number,
                     BillNum = editpurchesing.BillNum,
-                    Description = editpurchesing.Description,
-                    TotalPrice = editpurchesing.TotalPrice,
-                    UnitPrice = editpurchesing.UnitPrice
+                    Description = editpurchesing.Description
                     // DateSell = DateTime.Now,
                     //Emp_id = User.Identity.Name
 
@@ -185,7 +181,6 @@ namespace Project.Controllers
                 newpurchesing.BillNum = p.BillNum;
                 newpurchesing.Description = p.Description;
                 newpurchesing.TotalPrice = p.TotalPrice;
-                newpurchesing.UnitPrice = p.UnitPrice;
 
 
                 if (p.Categ_id != null) { newpurchesing.Categ_id = (int)p.Categ_id; newpurchesing.subCategories = subCategoryRepo.getAllByID((int)p.Categ_id); }
@@ -222,6 +217,15 @@ namespace Project.Controllers
                 //newpurchesing.ValueQuantity = newpurchesing.ValueQuantity;
                 return View(newpurchesing);
             }
+            if (!newpurchesing.UnitPrice.HasValue || newpurchesing.UnitPrice <= 0)
+            {
+                ModelState.AddModelError(nameof(newpurchesing.UnitPrice), "Enter a unit price greater than zero.");
+            }
+            if (!ModelState.IsValid)
+            {
+                newpurchesing.purchasing = purchasingRepo.getByIdwithAlQuantity(newpurchesing.Purch_id);
+                return View(newpurchesing);
+            }
             if (ModelState.IsValid)
             {
                 int numQuantity = purchasingQuantity.getAllBuPurchID(newpurchesing.Purch_id).Count();
@@ -238,11 +242,16 @@ namespace Project.Controllers
                     {
                         Purch_id = newpurchesing.Purch_id,
                         ValueQuantity = newpurchesing.ValueQuantity,
-                        UnitQuantity = newpurchesing.UnitQuantity ?? ""
+                        UnitQuantity = newpurchesing.UnitQuantity ?? "",
+                        UnitPrice = newpurchesing.UnitPrice
                     };
 
                     int result = purchasingQuantity.insert(pq);
-                    if (result == 1) { ViewBag.suc = "Done"; }
+                    if (result == 1)
+                    {
+                        purchasingRepo.RecalculateTotalPrice(newpurchesing.Purch_id);
+                        ViewBag.suc = "Done";
+                    }
                     else { ViewBag.fail = "fail"; }
                 }
               
@@ -298,7 +307,8 @@ namespace Project.Controllers
                             {
                                  Prod_Id = result,
                                  ValueQuantity = item.ValueQuantity,
-                                 UnitQuantity = item.UnitQuantity
+                                 UnitQuantity = item.UnitQuantity,
+                                 UnitCost = item.UnitPrice
                             };
                                 product_Quantity_Repo.insert(pq);
 
@@ -342,7 +352,11 @@ namespace Project.Controllers
         {
 
             int result =  purchasingQuantity.delete(id);
-            if(result == 1) { ViewBag.suc = "done";}
+            if(result == 1)
+            {
+                purchasingRepo.RecalculateTotalPrice(idPur);
+                ViewBag.suc = "done";
+            }
             else { ViewBag.fail = "fail";  }
             return RedirectToAction("Detail", new { id = idPur });
         }
@@ -360,6 +374,7 @@ namespace Project.Controllers
             pqvm.ID = pq.ID;
             pqvm.ValueQuantity = pq.ValueQuantity;
             pqvm.UnitQuantity = pq.UnitQuantity;
+            pqvm.UnitPrice = pq.UnitPrice;
             return View(pqvm);
         }
         [HttpPost]
@@ -375,6 +390,10 @@ namespace Project.Controllers
                 //editPquantity.UnitQuantity = pq.UnitQuantity;
                 return View(editPquantity);
             }
+            if (!editPquantity.UnitPrice.HasValue || editPquantity.UnitPrice <= 0)
+            {
+                ModelState.AddModelError(nameof(editPquantity.UnitPrice), "Enter a unit price greater than zero.");
+            }
             if (ModelState.IsValid)
             {
                 if (editPquantity.ValueQuantity < 1)
@@ -387,11 +406,17 @@ namespace Project.Controllers
                     {
                         ValueQuantity = editPquantity.ValueQuantity,
                         UnitQuantity = editPquantity.UnitQuantity,
+                        UnitPrice = editPquantity.UnitPrice,
                         ID = editPquantity.ID,
                         Purch_id = editPquantity.Purch_id
                     };
                     int result = purchasingQuantity.update(newpq);
-                    if (result == 1) { TempData["editQuantity"] = "Edit Quantity is Done"; return RedirectToAction("Detail", new { id = newpq.Purch_id }); }
+                    if (result == 1)
+                    {
+                        purchasingRepo.RecalculateTotalPrice(newpq.Purch_id);
+                        TempData["editQuantity"] = "Edit Quantity is Done";
+                        return RedirectToAction("Detail", new { id = newpq.Purch_id });
+                    }
                     else { ViewBag.fail = "fail"; }
                 }
             }

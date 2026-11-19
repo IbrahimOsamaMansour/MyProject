@@ -13,6 +13,7 @@ namespace Project.Models
         public virtual Purchasing purchasing { get; set; }
         public int ValueQuantity  { get; set; }
         public string? UnitQuantity { get; set; }
+        public double? UnitPrice { get; set; }
 
 
     }

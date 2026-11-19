@@ -14,13 +14,20 @@ namespace Project.Controllers
         private readonly IBillRepo billRepo;
         private readonly IProductBillRepo ProductbillRepo;
         private readonly IProduct_Quantity_Repo ProductquantityRepo;
+        private readonly double minimumProfitPercent;
 
-        public BillProductController(IProductRepo _proRepo, IBillRepo _billRepo , IProductBillRepo _probillRepo, IProduct_Quantity_Repo _payedquantityRepo)
+        public BillProductController(
+            IProductRepo _proRepo,
+            IBillRepo _billRepo,
+            IProductBillRepo _probillRepo,
+            IProduct_Quantity_Repo _payedquantityRepo,
+            IConfiguration configuration)
         {
             productRepo = _proRepo;
             billRepo = _billRepo;
             ProductbillRepo = _probillRepo;
             ProductquantityRepo = _payedquantityRepo;
+            minimumProfitPercent = Math.Max(0, configuration.GetValue<double?>("Pricing:MinimumProfitPercent") ?? 10);
         }
         //**********************************************************************************
         //**********************************************************************************
@@ -58,7 +65,39 @@ namespace Project.Controllers
                
                 return View("Add", newProductBill);
             }
-            else if (ModelState.IsValid)
+
+            Product? selectedProduct = productRepo.getById(newProductBill.product_ID);
+            Product_Quantity? selectedStock = selectedProduct?.Product_Quantities?
+                .FirstOrDefault(q => q.UnitQuantity == newProductBill.unit_Quantity);
+
+            if (newProductBill.unit_Price == null || newProductBill.unit_Price <= 0)
+            {
+                ModelState.AddModelError(nameof(newProductBill.unit_Price), "Enter a selling price greater than zero.");
+            }
+            else if (selectedStock?.UnitCost == null)
+            {
+                ModelState.AddModelError(nameof(newProductBill.unit_Price), "A purchase cost is not recorded for this product and unit. Add the unit cost in Stock before selling.");
+            }
+            else
+            {
+                double minimumSellingPrice = selectedStock.UnitCost.Value * (1 + minimumProfitPercent / 100);
+                if (newProductBill.unit_Price.Value + 0.000001 < minimumSellingPrice)
+                {
+                    ModelState.AddModelError(
+                        nameof(newProductBill.unit_Price),
+                        $"Selling price must be at least {minimumProfitPercent:0.##}% above purchase cost. Minimum price: {minimumSellingPrice:0.##} LE.");
+                }
+            }
+
+            if (!ModelState.IsValid)
+            {
+                newProductBill.bill = billRepo.GetById(newProductBill.Bill_ID);
+                newProductBill.products = productRepo.getAll();
+                newProductBill.ProductBills = ProductbillRepo.GetByBillId(newProductBill.Bill_ID);
+                return View("Add", newProductBill);
+            }
+
+            if (ModelState.IsValid)
             {
                 Product_Bill pb = new Product_Bill()
                 {

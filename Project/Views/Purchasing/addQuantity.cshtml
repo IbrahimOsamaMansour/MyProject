@@ -103,13 +103,15 @@ SelectList quantitynits = new SelectList(Model.units);
 								<tr>
 									<th>Quantity </th>
 									<th>unit </th>
+									<th>Unit Price</th>
+									<th>Line Total</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach (var item in Model.purchasing.Purchasing_Quantities)
 								{
 									<tr>
-									@if(item.ValueQuantity != null ){<td>@item.ValueQuantity</td> <td>@item.UnitQuantity</td>}
+									@if(item.ValueQuantity != null ){<td>@item.ValueQuantity</td> <td>@item.UnitQuantity</td><td>@item.UnitPrice</td><td>@(item.ValueQuantity * (item.UnitPrice ?? 0))</td>}
 									else{<td>----</td>}										
 										
 									</tr>
@@ -156,6 +158,14 @@ SelectList quantitynits = new SelectList(Model.units);
 
 									</select>
 								}<span style="color:red" asp-validation-for="UnitQuantity"></span>
+									</div>
+								</div>
+
+								<div class="item form-group">
+									<label asp-for="UnitPrice" class="col-form-label col-md-3 col-sm-3 label-align">Unit Price <span class="required">*</span></label>
+									<div class="col-md-6 col-sm-6">
+										<input asp-for="UnitPrice" type="number" min="0.01" step="0.01" class="form-control" />
+										<span class="text-danger" asp-validation-for="UnitPrice"></span>
 									</div>
 								</div>
 

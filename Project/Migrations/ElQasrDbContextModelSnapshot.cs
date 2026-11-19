@@ -199,7 +199,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Employee_ID");
 
-                    b.ToTable("Bill", (string)null);
+                    b.ToTable("Bill");
                 });
 
             modelBuilder.Entity("Project.Models.Category", b =>
@@ -222,7 +222,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Suc_Categ_Id");
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Project.Models.Company", b =>
@@ -244,7 +244,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Company", (string)null);
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("Project.Models.Company_Phone", b =>
@@ -265,7 +265,7 @@ namespace Project.Migrations
 
                     b.HasIndex("COMP_ID");
 
-                    b.ToTable("Company_Phone", (string)null);
+                    b.ToTable("Company_Phone");
                 });
 
             modelBuilder.Entity("Project.Models.Emp_Attendance", b =>
@@ -292,7 +292,7 @@ namespace Project.Migrations
 
                     b.HasIndex("workerID");
 
-                    b.ToTable("Emp_Attendance", (string)null);
+                    b.ToTable("Emp_Attendance");
                 });
 
             modelBuilder.Entity("Project.Models.Emp_Salary", b =>
@@ -322,7 +322,7 @@ namespace Project.Migrations
 
                     b.HasIndex("WorkerID");
 
-                    b.ToTable("Emp_Salarie", (string)null);
+                    b.ToTable("Emp_Salarie");
                 });
 
             modelBuilder.Entity("Project.Models.Employee", b =>
@@ -426,7 +426,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Item_Ex_ID");
 
-                    b.ToTable("Expense", (string)null);
+                    b.ToTable("Expense");
                 });
 
             modelBuilder.Entity("Project.Models.Item_Expenses", b =>
@@ -444,7 +444,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("item_Expenses", (string)null);
+                    b.ToTable("item_Expenses");
                 });
 
             modelBuilder.Entity("Project.Models.Payed_quantity", b =>
@@ -468,7 +468,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Bill_ID");
 
-                    b.ToTable("payed_Quantity", (string)null);
+                    b.ToTable("payed_Quantity");
                 });
 
             modelBuilder.Entity("Project.Models.Product", b =>
@@ -517,7 +517,7 @@ namespace Project.Migrations
 
                     b.HasIndex("subCateg_id");
 
-                    b.ToTable("Product", (string)null);
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Project.Models.Product_Bill", b =>
@@ -559,7 +559,7 @@ namespace Project.Migrations
 
                     b.HasIndex("product_ID");
 
-                    b.ToTable("Product_Bill", (string)null);
+                    b.ToTable("Product_Bill");
                 });
 
             modelBuilder.Entity("Project.Models.Product_Purchasing", b =>
@@ -582,7 +582,7 @@ namespace Project.Migrations
 
                     b.HasIndex("product_Id");
 
-                    b.ToTable("product_Purchasing", (string)null);
+                    b.ToTable("product_Purchasing");
                 });
 
             modelBuilder.Entity("Project.Models.Product_Quantity", b =>
@@ -596,6 +596,9 @@ namespace Project.Migrations
                     b.Property<int?>("Prod_Id")
                         .HasColumnType("int");
 
+                    b.Property<double?>("UnitCost")
+                        .HasColumnType("float");
+
                     b.Property<string>("UnitQuantity")
                         .HasColumnType("nvarchar(max)");
 
@@ -606,7 +609,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Prod_Id");
 
-                    b.ToTable("product_Quantity", (string)null);
+                    b.ToTable("product_Quantity");
                 });
 
             modelBuilder.Entity("Project.Models.Purchasing", b =>
@@ -650,9 +653,6 @@ namespace Project.Migrations
                     b.Property<double?>("TotalPrice")
                         .HasColumnType("float");
 
-                    b.Property<double?>("UnitPrice")
-                        .HasColumnType("float");
-
                     b.Property<int?>("subCateg_id")
                         .HasColumnType("int");
 
@@ -666,7 +666,7 @@ namespace Project.Migrations
 
                     b.HasIndex("subCateg_id");
 
-                    b.ToTable("purchasing", (string)null);
+                    b.ToTable("purchasing");
                 });
 
             modelBuilder.Entity("Project.Models.Purchasing_Quantity", b =>
@@ -680,6 +680,9 @@ namespace Project.Migrations
                     b.Property<int>("Purch_id")
                         .HasColumnType("int");
 
+                    b.Property<double?>("UnitPrice")
+                        .HasColumnType("float");
+
                     b.Property<string>("UnitQuantity")
                         .HasColumnType("nvarchar(max)");
 
@@ -690,7 +693,7 @@ namespace Project.Migrations
 
                     b.HasIndex("Purch_id");
 
-                    b.ToTable("Purchasing_Quantity", (string)null);
+                    b.ToTable("Purchasing_Quantity");
                 });
 
             modelBuilder.Entity("Project.Models.Workers", b =>
@@ -717,7 +720,7 @@ namespace Project.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("workers", (string)null);
+                    b.ToTable("workers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

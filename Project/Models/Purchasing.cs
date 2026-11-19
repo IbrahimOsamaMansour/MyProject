@@ -14,8 +14,6 @@ namespace Project.Models
         public int? Number { get; set; }
         public double? TotalPrice { get; set; }
 
-        public double? UnitPrice { get; set; }
-
         [StringLength(200)]
 
         public string? Description { get; set; }

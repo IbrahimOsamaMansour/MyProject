@@ -142,7 +142,8 @@ namespace Project.Controllers
                     {
                         Prod_Id = newpurchesing.Product_id,
                         ValueQuantity = newpurchesing.ValueQuantity,
-                        UnitQuantity = newpurchesing.UnitQuantity ?? ""
+                        UnitQuantity = newpurchesing.UnitQuantity ?? "",
+                        UnitCost = newpurchesing.UnitCost
                     };
 
                     int result = quantity_Repo.insert(pq);
@@ -167,6 +168,7 @@ namespace Project.Controllers
             pqvm.ID = pq.Id;
             pqvm.ValueQuantity = pq.ValueQuantity;
             pqvm.UnitQuantity = pq.UnitQuantity;
+            pqvm.UnitCost = pq.UnitCost;
             return View(pqvm);
         }
         [HttpPost]
@@ -191,6 +193,7 @@ namespace Project.Controllers
                     {
                         ValueQuantity = editPquantity.ValueQuantity,
                         UnitQuantity = editPquantity.UnitQuantity,
+                        UnitCost = editPquantity.UnitCost,
                         Id = editPquantity.ID,
                         Prod_Id = editPquantity.Product_id
                     };

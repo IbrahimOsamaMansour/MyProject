@@ -76,7 +76,13 @@
 							</div>
 						</div>
 
-
+						<div class="item form-group">
+							<label asp-for="UnitCost" class="col-form-label col-md-3 col-sm-3 label-align">Unit Cost <small>(optional)</small></label>
+							<div class="col-md-6 col-sm-6">
+								<input asp-for="UnitCost" type="number" min="0" step="0.01" class="form-control" />
+								<span class="text-danger" asp-validation-for="UnitCost"></span>
+							</div>
+						</div>
 
 						<div class="ln_solid"></div>
 						<div class="item form-group">

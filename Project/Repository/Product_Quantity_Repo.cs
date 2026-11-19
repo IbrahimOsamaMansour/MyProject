@@ -55,6 +55,7 @@ namespace Project.Repository
 
                 oldpuq.ValueQuantity = editperchasing.ValueQuantity;
                 oldpuq.UnitQuantity = editperchasing.UnitQuantity;
+                oldpuq.UnitCost = editperchasing.UnitCost;
                 db.SaveChanges();
                 return 1;
             }

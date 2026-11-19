@@ -80,6 +80,8 @@
 									<tr>
 										<th>Quantity </th>
 										<th>unit </th>
+										<th>Unit Price</th>
+										<th>Line Total</th>
 										<th colspan="3"></th>
 									</tr>
 								</thead>
@@ -88,7 +90,9 @@
 									{
 										<tr>
 											<td>@item.ValueQuantity</td>
-											<td>@item.UnitQuantity</td>											
+											<td>@item.UnitQuantity</td>
+											<td>@item.UnitPrice</td>
+											<td>@(item.ValueQuantity * (item.UnitPrice ?? 0))</td>
 											<td><a asp-action="editQuantity" asp-route-id="@item.ID" class="btn btn-info">Edit</a></td>
 											<td> <a asp-action="deleteQuantity" asp-route-id="@item.ID" asp-route-idPur="@item.Purch_id" class="btn btn-danger" onclick="return DeleteItem()">Delete</a></td>
 										</tr>

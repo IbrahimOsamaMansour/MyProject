@@ -39,8 +39,6 @@ namespace Project.Repository
                     oldpurchasing.Name = editperchasing.Name;
                     oldpurchasing.Number = editperchasing.Number;
                     oldpurchasing.ModelName = editperchasing.ModelName;
-                    oldpurchasing.TotalPrice = editperchasing.TotalPrice;
-                    oldpurchasing.UnitPrice = editperchasing.UnitPrice;
                     oldpurchasing.Description = editperchasing.Description;
                     oldpurchasing.DateSell = editperchasing.DateSell;
                     oldpurchasing.BillNum = editperchasing.BillNum;
@@ -73,6 +71,22 @@ namespace Project.Repository
             Purchasing purchasing = getById(id);
             purchasing.Purchasing_Quantities = db.Purchasing_Quantity.Where(x => x.Purch_id == id).ToList();
             return purchasing;
+        }
+
+        public int RecalculateTotalPrice(int purchasingId)
+        {
+            Purchasing purchasing = db.purchasing.FirstOrDefault(x => x.ID == purchasingId);
+            if (purchasing == null) { return -1; }
+
+            try
+            {
+                purchasing.TotalPrice = db.Purchasing_Quantity
+                    .Where(x => x.Purch_id == purchasingId)
+                    .Sum(x => (double?)(x.ValueQuantity * (x.UnitPrice ?? 0))) ?? 0;
+                db.SaveChanges();
+                return 1;
+            }
+            catch { return 0; }
         }
     }
 }

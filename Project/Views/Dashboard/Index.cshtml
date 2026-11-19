@@ -1,0 +1,181 @@
+@model Project.ViewModel.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<div class="page-title">
+    <div class="title_left"><h3>Dashboard</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content">
+            <h4>Sales Revenue (All Time)</h4><h2>@Model.SalesRevenue.ToString("N2") LE</h2>
+            <small>Confirmed sold products</small>
+        </div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content">
+            <h4>Customer Payments Collected (All Time)</h4><h2>@Model.CustomerPaymentsCollected.ToString("N2") LE</h2>
+            <small>Cash received from customers</small>
+        </div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content">
+            <h4>Purchase Value Recorded (All Time)</h4><h2>@Model.PurchaseValueRecorded.ToString("N2") LE</h2>
+            <small>Recorded purchase cost, not supplier payments</small>
+        </div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content">
+            <h4>Estimated Net Profit (All Time)</h4><h2>@Model.EstimatedNetProfit.ToString("N2") LE</h2>
+            <small>Gross profit − recorded expenses − recorded payroll</small>
+        </div></div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content"><h4>Cost of Goods Sold (All Time)</h4><h2>@Model.CostOfGoodsSold.ToString("N2") LE</h2></div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content"><h4>Gross Profit (All Time)</h4><h2>@Model.GrossProfit.ToString("N2") LE</h2><small>Sales revenue − cost of sold stock</small></div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content"><h4>Expenses Recorded (All Time)</h4><h2>@Model.ExpensesRecorded.ToString("N2") LE</h2></div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content"><h4>Payroll Recorded (All Time)</h4><h2>@Model.PayrollRecorded.ToString("N2") LE</h2></div></div>
+    </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="x_panel"><div class="x_content">
+            <h4>Stock Value at Known Cost</h4><h2>@Model.StockValueAtKnownCost.ToString("N2") LE</h2>
+            <small>@Model.StockLinesWithoutCost stock entries have no recorded cost</small>
+        </div></div>
+    </div>
+</div>
+
+@if (Model.SoldLinesWithoutCost > 0)
+{
+    <div class="alert alert-warning">
+        Profit is an estimate: @Model.SoldLinesWithoutCost sold invoice lines have no complete recorded cost for their product and unit, so their cost is not included.
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Stock Movement by Unit</h2><div class="clearfix"></div></div>
+            <div class="x_content table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead><tr><th>Unit</th><th>Purchased / Received</th><th>Sold / Out</th><th>Current Stock</th></tr></thead>
+                    <tbody>
+                    @if (Model.UnitMovements.Count == 0)
+                    {
+                        <tr><td colspan="4" class="text-center">No stock movement recorded.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var movement in Model.UnitMovements)
+                        {
+                            <tr><td>@movement.Unit</td><td>@movement.Purchased</td><td>@movement.Sold</td><td>@movement.InStock</td></tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Recent Sales</h2><div class="clearfix"></div></div>
+            <div class="x_content table-responsive">
+                <table class="table table-striped">
+                    <thead><tr><th>Date</th><th>Invoice</th><th>Customer</th><th>Product</th><th>Qty</th><th>Total</th></tr></thead>
+                    <tbody>
+                    @if (Model.RecentSales.Count == 0)
+                    {
+                        <tr><td colspan="6" class="text-center">No confirmed sales yet.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var sale in Model.RecentSales)
+                        {
+                            <tr><td>@sale.Date.ToShortDateString()</td><td>@sale.BillNumber</td><td>@sale.Customer</td><td>@sale.Product</td><td>@sale.Quantity @sale.Unit</td><td>@sale.Total.ToString("N2") LE</td></tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Recent Customer Payments</h2><div class="clearfix"></div></div>
+            <div class="x_content table-responsive">
+                <table class="table table-striped">
+                    <thead><tr><th>Date</th><th>Invoice</th><th>Customer</th><th>Amount</th></tr></thead>
+                    <tbody>
+                    @if (Model.RecentPayments.Count == 0)
+                    {
+                        <tr><td colspan="4" class="text-center">No customer payments recorded.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var payment in Model.RecentPayments)
+                        {
+                            <tr><td>@payment.Date.ToShortDateString()</td><td>@payment.BillNumber</td><td>@payment.Customer</td><td>@payment.Amount.ToString("N2") LE</td></tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Recent Expenses</h2><div class="clearfix"></div></div>
+            <div class="x_content table-responsive">
+                <table class="table table-striped">
+                    <thead><tr><th>Date</th><th>Expense Item</th><th>Note</th><th>Amount</th></tr></thead>
+                    <tbody>
+                    @if (Model.RecentExpenses.Count == 0)
+                    {
+                        <tr><td colspan="4" class="text-center">No expenses recorded.</td></tr>
+                    }
+                    else
+                    {
+                        @foreach (var expense in Model.RecentExpenses)
+                        {
+                            <tr><td>@expense.Date.ToShortDateString()</td><td>@expense.Item</td><td>@expense.Note</td><td>@expense.Amount.ToString("N2") LE</td></tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Accounting Notes</h2><div class="clearfix"></div></div>
+            <div class="x_content">
+                <ul>
+                    <li>Customer payments are recorded as cash received.</li>
+                    <li>Purchase value is the cost recorded on purchase entries; supplier payments are not tracked separately in this system.</li>
+                    <li>All financial totals above are cumulative (all time), not limited to a month or date range.</li>
+                    <li>Gross profit is confirmed sales minus estimated cost of sold stock. Net profit then subtracts recorded expenses and salary records.</li>
+                    <li>For products with multiple stock entries in the same unit, sold-stock cost uses a quantity-weighted average of recorded costs.</li>
+                    <li>Stock and movement quantities are grouped by unit; different units are not added together.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1159 @@
+html {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body {
+    max-width: 100%;
+    /* Keep the document as the single vertical scroll container. */
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+.container.body,
+.main_container,
+.right_col,
+.top_nav,
+.x_panel,
+.x_content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Keep the theme's dark color on the sidebar, not below short page content. */
+body.nav-md,
+body.nav-sm {
+    background: #f7f7f7;
+}
+
+body.nav-md .container.body .left_col,
+body.nav-sm .container.body .left_col {
+    background: #2a3f54;
+}
+
+/* The sidebar is fixed by the theme; use the remaining layout rows to keep
+   the page footer at the viewport bottom on short pages. */
+body.nav-md .container.body .main_container,
+body.nav-sm .container.body .main_container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.nav-md .container.body .main_container > .top_nav,
+body.nav-sm .container.body .main_container > .top_nav,
+body.nav-md .container.body .main_container > footer,
+body.nav-sm .container.body .main_container > footer {
+    flex: 0 0 auto;
+}
+
+body.nav-md .container.body .main_container > .right_col,
+body.nav-sm .container.body .main_container > .right_col {
+    box-sizing: border-box;
+    flex: 1 0 auto;
+    min-height: 0 !important;
+}
+
+.x_panel {
+    box-sizing: border-box;
+}
+
+.x_content {
+    overflow-x: visible;
+}
+
+.x_content > table,
+.x_content .table {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    table-layout: auto;
+    white-space: normal;
+}
+
+.right_col form,
+.right_col .form-control,
+.right_col img,
+.right_col video,
+.right_col iframe {
+    max-width: 100%;
+}
+
+.table-responsive {
+    max-width: 100%;
+    overflow-x: visible;
+}
+
+.language-switcher .language-toggle,
+.language-switcher-simple .language-toggle {
+    max-width: 100%;
+}
+
+.language-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    direction: ltr;
+    padding: 3px;
+    border: 1px solid #cfd7e2;
+    border-radius: 6px;
+    background: #f4f6f9;
+    white-space: nowrap;
+}
+
+.language-toggle-option {
+    min-width: 38px;
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #34495e;
+    font-size: 12px;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.language-toggle-option.is-active {
+    background: #2a3f54;
+    color: #fff;
+}
+
+.language-toggle-option:not(.is-active):hover {
+    background: #e5edf3;
+}
+
+.language-toggle-option:focus-visible {
+    outline: 2px solid #3498db;
+    outline-offset: 1px;
+}
+
+/* The legacy admin theme uses Bootstrap 3, while several views use col-N utilities. */
+body.nav-md .row > .col-1,
+body.nav-sm .row > .col-1,
+body.nav-md .row > .col-2,
+body.nav-sm .row > .col-2,
+body.nav-md .row > .col-4,
+body.nav-sm .row > .col-4,
+body.nav-md .row > .col-5,
+body.nav-sm .row > .col-5,
+body.nav-md .row > .col-6,
+body.nav-sm .row > .col-6,
+body.nav-md .row > .col-7,
+body.nav-sm .row > .col-7,
+body.nav-md .row > .col-8,
+body.nav-sm .row > .col-8,
+body.nav-md .row > .col-9,
+body.nav-sm .row > .col-9,
+body.nav-md .row > .col-11,
+body.nav-sm .row > .col-11 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+    float: left;
+}
+
+body.nav-md .row > .col-1,
+body.nav-sm .row > .col-1 { width: 8.33333333%; }
+body.nav-md .row > .col-2,
+body.nav-sm .row > .col-2 { width: 16.66666667%; }
+body.nav-md .row > .col-4,
+body.nav-sm .row > .col-4 { width: 33.33333333%; }
+body.nav-md .row > .col-5,
+body.nav-sm .row > .col-5 { width: 41.66666667%; }
+body.nav-md .row > .col-6,
+body.nav-sm .row > .col-6 { width: 50%; }
+body.nav-md .row > .col-7,
+body.nav-sm .row > .col-7 { width: 58.33333333%; }
+body.nav-md .row > .col-8,
+body.nav-sm .row > .col-8 { width: 66.66666667%; }
+body.nav-md .row > .col-9,
+body.nav-sm .row > .col-9 { width: 75%; }
+body.nav-md .row > .col-11,
+body.nav-sm .row > .col-11 { width: 91.66666667%; }
+
+html[dir="rtl"] body.nav-md .row > [class*="col-"],
+html[dir="rtl"] body.nav-sm .row > [class*="col-"] {
+    float: right;
+}
+
+body.nav-sm .nav.side-menu > li > a {
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 0;
+    color: transparent;
+}
+
+body.nav-sm .nav.side-menu > li > a > i {
+    width: 100%;
+    margin: 0;
+    font-size: 18px;
+    color: #e7edef;
+}
+
+body.nav-sm .nav.side-menu > li > a > .fa-chevron-down {
+    display: none;
+}
+
+html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+    text-align: center;
+}
+
+html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a > i {
+    display: block;
+    flex: 0 0 26px;
+    width: 26px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    font-size: 22px !important;
+    text-align: center;
+    line-height: 1;
+}
+
+/* In RTL the collapsed sidebar is on the right, so its flyout must open inward. */
+html[dir="rtl"] body.nav-sm .left_col .scroll-view {
+    overflow: visible !important;
+}
+
+html[dir="rtl"] body.nav-sm .left_col ul.nav.child_menu {
+    left: auto !important;
+    right: 100% !important;
+    top: 0;
+    width: 210px;
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] body.nav-sm .left_col ul.nav.child_menu li a {
+    text-align: right !important;
+    white-space: normal;
+}
+
+html[dir="rtl"] body.nav-sm .left_col .nav.side-menu li.active-sm,
+html[dir="rtl"] body.nav-sm .left_col .nav.child_menu li.active {
+    border-right: 0 !important;
+    border-left: 5px solid #1ABB9C;
+}
+
+@media (max-width: 991px) {
+    /* Keep the application content usable beside a compact sidebar on tablets. */
+    body.nav-md .container.body .left_col,
+    body.nav-sm .container.body .left_col {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: auto;
+        width: 70px;
+        z-index: 1000;
+    }
+
+    html[dir="rtl"] body.nav-md .container.body .left_col,
+    html[dir="rtl"] body.nav-sm .container.body .left_col {
+        left: auto;
+        right: 0;
+    }
+
+    body.nav-md .container.body .right_col,
+    body.nav-sm .container.body .right_col,
+    body.nav-md .container.body .top_nav,
+    body.nav-sm .container.body .top_nav,
+    body.nav-md .container.body footer,
+    body.nav-sm .container.body footer {
+        margin-left: 70px !important;
+        margin-right: 0 !important;
+        width: auto !important;
+        min-width: 0;
+    }
+
+    html[dir="rtl"] body.nav-md .container.body .right_col,
+    html[dir="rtl"] body.nav-sm .container.body .right_col,
+    html[dir="rtl"] body.nav-md .container.body .top_nav,
+    html[dir="rtl"] body.nav-sm .container.body .top_nav,
+    html[dir="rtl"] body.nav-md .container.body footer,
+    html[dir="rtl"] body.nav-sm .container.body footer {
+        margin-left: 0 !important;
+        margin-right: 70px !important;
+    }
+
+    body.nav-md .container.body .left_col .profile,
+    body.nav-sm .container.body .left_col .profile,
+    body.nav-md .container.body .left_col .navbar.nav_title,
+    body.nav-sm .container.body .left_col .navbar.nav_title {
+        display: none !important;
+    }
+
+    body.nav-md .left_col .scroll-view,
+    body.nav-sm .left_col .scroll-view {
+        overflow: visible !important;
+    }
+
+    body.nav-md .left_col .nav.side-menu > li > a,
+    body.nav-sm .left_col .nav.side-menu > li > a {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        overflow: hidden;
+        padding: 12px 0;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 0 !important;
+        color: transparent !important;
+    }
+
+    body.nav-md .left_col .nav.side-menu > li > a > i,
+    body.nav-sm .left_col .nav.side-menu > li > a > i {
+        display: block;
+        flex: 0 0 26px;
+        width: 26px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+        color: #e7edef !important;
+        font-size: 22px !important;
+        line-height: 1;
+        text-align: center;
+    }
+
+    body.nav-md .left_col .nav.side-menu > li > a > .fa-chevron-down,
+    body.nav-sm .left_col .nav.side-menu > li > a > .fa-chevron-down {
+        display: none !important;
+    }
+
+    body.nav-md .left_col ul.nav.child_menu,
+    body.nav-sm .left_col ul.nav.child_menu {
+        position: absolute !important;
+        top: 0;
+        left: 100%;
+        right: auto;
+        width: 210px;
+        z-index: 4000;
+        background: #3E5367;
+        display: none;
+    }
+
+    body.nav-md .left_col .nav.side-menu > li:hover > ul.nav.child_menu,
+    body.nav-sm .left_col .nav.side-menu > li:hover > ul.nav.child_menu,
+    body.nav-md .left_col .nav.side-menu > li:focus-within > ul.nav.child_menu,
+    body.nav-sm .left_col .nav.side-menu > li:focus-within > ul.nav.child_menu {
+        display: block !important;
+    }
+
+    body.nav-md .left_col ul.nav.child_menu li a,
+    body.nav-sm .left_col ul.nav.child_menu li a {
+        white-space: normal;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col ul.nav.child_menu,
+    html[dir="rtl"] body.nav-sm .left_col ul.nav.child_menu {
+        left: auto !important;
+        right: 100% !important;
+        direction: rtl;
+        text-align: right;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col ul.nav.child_menu li a,
+    html[dir="rtl"] body.nav-sm .left_col ul.nav.child_menu li a {
+        text-align: right !important;
+    }
+
+    /* Keep the menu toggle, language selector, and account image visible. */
+    body.nav-md .container.body .top_nav .nav_menu,
+    body.nav-sm .container.body .top_nav .nav_menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 52px;
+        padding: 0 6px;
+    }
+
+    body.nav-md .container.body .top_nav .nav.toggle,
+    body.nav-sm .container.body .top_nav .nav.toggle {
+        position: static;
+        flex: 0 0 42px;
+        float: none !important;
+        width: 42px;
+        margin: 0 !important;
+        padding: 0;
+        text-align: center;
+    }
+
+    body.nav-md .container.body .top_nav nav.navbar-nav,
+    body.nav-sm .container.body .top_nav nav.navbar-nav {
+        display: block !important;
+        flex: 1 1 auto;
+        min-width: 0;
+        float: none !important;
+        margin: 0 !important;
+    }
+
+    body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right,
+    body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right {
+        display: flex !important;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+        width: 100%;
+        float: none !important;
+        margin: 0 !important;
+    }
+
+    html[dir="rtl"] body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right,
+    html[dir="rtl"] body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right {
+        justify-content: flex-start;
+    }
+
+    body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right > li,
+    body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right > li {
+        flex: 0 0 auto;
+        float: none !important;
+        padding: 4px !important;
+    }
+
+    body.nav-md .container.body .top_nav .language-switcher .language-toggle,
+    body.nav-sm .container.body .top_nav .language-switcher .language-toggle {
+        margin: 0;
+    }
+
+    body.nav-md .container.body .top_nav .user-profile,
+    body.nav-sm .container.body .top_nav .user-profile {
+        display: flex !important;
+        align-items: center;
+        gap: 5px;
+        padding: 0 !important;
+        white-space: nowrap;
+    }
+
+    body.nav-md .container.body .top_nav .user-profile img,
+    body.nav-sm .container.body .top_nav .user-profile img {
+        display: inline-block !important;
+        flex: 0 0 30px;
+        width: 30px !important;
+        height: 30px !important;
+        max-width: 30px;
+        margin: 0 !important;
+    }
+
+    .x_content,
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+    }
+
+    /* Use the panel as the single scroll container when a table wrapper is nested inside it. */
+    .x_content:not(.table-responsive) > .table-responsive {
+        overflow-x: visible !important;
+        max-width: none;
+    }
+
+    .x_content > table,
+    .x_content .table,
+    .table-responsive > .table {
+        width: max-content !important;
+        min-width: 100%;
+        max-width: none !important;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 767px) {
+    body.nav-md .container.body .left_col,
+    body.nav-sm .container.body .left_col,
+    html[dir="rtl"] body.nav-md .container.body .left_col,
+    html[dir="rtl"] body.nav-sm .container.body .left_col {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 64px;
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    body.nav-md .container.body .left_col {
+        left: 0;
+        right: auto;
+    }
+
+    html[dir="rtl"] body.nav-md .container.body .left_col,
+    html[dir="rtl"] body.nav-sm .container.body .left_col {
+        left: auto;
+        right: 0;
+    }
+
+    body.nav-md .container.body .right_col,
+    body.nav-sm .container.body .right_col,
+    body.nav-md .container.body .top_nav,
+    body.nav-sm .container.body .top_nav,
+    body.nav-md .container.body footer,
+    body.nav-sm .container.body footer {
+        margin-left: 64px !important;
+        margin-right: 0 !important;
+    }
+
+    html[dir="rtl"] body.nav-md .container.body .right_col,
+    html[dir="rtl"] body.nav-sm .container.body .right_col,
+    html[dir="rtl"] body.nav-md .container.body .top_nav,
+    html[dir="rtl"] body.nav-sm .container.body .top_nav,
+    html[dir="rtl"] body.nav-md .container.body footer,
+    html[dir="rtl"] body.nav-sm .container.body footer {
+        margin-left: 0 !important;
+        margin-right: 64px !important;
+    }
+
+    body.nav-md .container.body .left_col .profile,
+    body.nav-sm .container.body .left_col .profile,
+    body.nav-md .container.body .left_col .navbar.nav_title,
+    body.nav-sm .container.body .left_col .navbar.nav_title {
+        display: none;
+    }
+
+    body.nav-md .nav.side-menu > li > a,
+    body.nav-sm .nav.side-menu > li > a {
+        overflow: hidden;
+        padding: 12px 4px;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 0;
+        color: transparent;
+    }
+
+    body.nav-md .nav.side-menu > li > a > i,
+    body.nav-sm .nav.side-menu > li > a > i {
+        width: 100%;
+        margin: 0;
+        font-size: 18px;
+        color: #e7edef;
+    }
+
+    html[dir="rtl"] body.nav-sm .nav.side-menu > li > a,
+    html[dir="rtl"] body.nav-md .nav.side-menu > li > a {
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    html[dir="rtl"] body.nav-sm .nav.side-menu > li > a > i,
+    html[dir="rtl"] body.nav-md .nav.side-menu > li > a > i {
+        display: block;
+        flex: 0 0 26px;
+        width: 26px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        float: none !important;
+        font-size: 22px !important;
+        text-align: center;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col .scroll-view {
+        overflow: visible !important;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col ul.nav.child_menu {
+        position: absolute;
+        left: auto !important;
+        right: 100% !important;
+        top: 0;
+        width: 210px;
+        z-index: 4000;
+        background: #3E5367;
+        direction: rtl;
+        text-align: right;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col ul.nav.child_menu li a {
+        text-align: right !important;
+        white-space: normal;
+    }
+
+    body.nav-md .nav.side-menu > li > a > .fa-chevron-down,
+    body.nav-sm .nav.side-menu > li > a > .fa-chevron-down {
+        display: none;
+    }
+
+    .right_col {
+        padding: 10px !important;
+    }
+
+    .right_col .row,
+    .x_content .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .x_panel[style*="width"],
+    .x_panel[style*="margin-left"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .right_col [style*="margin-left:20%"],
+    .right_col [style*="margin-left: 20%"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .x_title {
+        min-height: 0;
+    }
+
+    .x_title h2 {
+        max-width: calc(100% - 50px);
+        overflow-wrap: anywhere;
+        white-space: normal;
+    }
+
+    .input-group,
+    .input-group .form-control {
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .form-horizontal .form-group {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .x_content,
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .x_content > table,
+    .x_content .table,
+    .table-responsive > .table {
+        width: max-content !important;
+        min-width: 100%;
+        max-width: none !important;
+        white-space: nowrap;
+    }
+
+    body.nav-md .row > [class*="col-"],
+    body.nav-sm .row > [class*="col-"] {
+        width: 100%;
+        float: none;
+    }
+
+    .language-switcher-simple {
+        top: 8px;
+        right: 8px;
+        left: auto;
+        width: auto;
+    }
+
+    html[dir="rtl"] .language-switcher-simple {
+        right: auto;
+        left: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .right_col {
+        padding: 6px !important;
+    }
+
+    .x_panel {
+        padding: 8px;
+    }
+
+    .x_content {
+        padding: 5px;
+    }
+
+    .btn {
+        max-width: 100%;
+        white-space: normal;
+    }
+
+    .x_title h2 {
+        font-size: 15px;
+    }
+
+    body.nav-md .container.body .top_nav .nav.toggle,
+    body.nav-sm .container.body .top_nav .nav.toggle {
+        flex-basis: 36px;
+        width: 36px;
+    }
+
+    body.nav-md .container.body .top_nav .language-switcher .language-toggle-option,
+    body.nav-sm .container.body .top_nav .language-switcher .language-toggle-option {
+        min-width: 34px;
+        padding: 5px 7px;
+    }
+
+    body.nav-md .container.body .top_nav .user-profile bdi,
+    body.nav-sm .container.body .top_nav .user-profile bdi {
+        display: inline-block;
+        max-width: 56px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+    }
+}
+
+/* Give each table its own horizontal scroll area so nearby controls stay in view. */
+.responsive-table-scroll {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
+}
+
+/* Compact language control used in both the account pages and app navigation. */
+.language-switcher-simple {
+    width: auto;
+}
+
+@media (max-width: 767px) {
+    .language-switcher-simple {
+        width: auto;
+    }
+}
+
+.loginbody .form-title {
+    width: 100%;
+    text-align: center;
+}
+
+/* Keep the standalone login screen independent from the admin shell sizing. */
+.loginbody {
+    box-sizing: border-box;
+    min-height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-position: center center;
+    background-size: cover;
+}
+
+.loginbody .gradient-custom-3 {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    height: auto !important;
+    padding: 24px 16px;
+}
+
+.loginbody .gradient-custom-3 > .main,
+.loginbody .signup,
+.loginbody .signup > .container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.loginbody .signup-content {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto !important;
+    margin: 0 auto;
+    padding: 40px clamp(24px, 7vw, 80px);
+}
+
+.loginbody #signup-form {
+    padding-top: 0 !important;
+}
+
+.loginbody .loginhere {
+    margin-top: 48px;
+}
+
+@media (max-width: 991px) {
+    .x_content,
+    .table-responsive {
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+    }
+
+    .responsive-table-scroll {
+        display: block;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        overscroll-behavior-x: contain;
+        scrollbar-width: auto;
+    }
+
+    .responsive-table-scroll > table {
+        display: table;
+        width: max-content !important;
+        min-width: 100%;
+        max-width: none !important;
+        white-space: nowrap;
+    }
+
+    html[dir="rtl"] .responsive-table-scroll {
+        direction: ltr;
+    }
+
+    html[dir="rtl"] .responsive-table-scroll > table {
+        direction: rtl;
+    }
+}
+
+@media print {
+    .responsive-table-scroll {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+    }
+
+    .responsive-table-scroll > table {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        white-space: normal !important;
+    }
+}
+
+/* Arabic panel titles stay at the right while their toolbox stays at the left. */
+html[dir="rtl"] .x_title {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    direction: rtl;
+    gap: 8px;
+}
+
+html[dir="rtl"] .x_title > h2 {
+    order: 1;
+    flex: 1 1 auto;
+    float: none !important;
+    width: auto !important;
+    min-width: 0;
+    margin: 0;
+    text-align: right !important;
+}
+
+html[dir="rtl"] .x_title > .panel_toolbox {
+    order: 2;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0;
+    direction: ltr;
+}
+
+html[dir="rtl"] .x_title > .panel_toolbox > li {
+    float: none !important;
+}
+
+html[dir="rtl"] .x_title > .clearfix {
+    display: none !important;
+}
+
+html[dir="rtl"] .nav.side-menu > li.current-page,
+html[dir="rtl"] .nav.side-menu > li.active,
+html[dir="rtl"] .nav.side-menu > li.active-sm {
+    border-right: 0 !important;
+    border-left: 5px solid #1ABB9C;
+}
+
+/* Keep each RTL section icon beside its label; the submenu chevron stays at the left. */
+@media (min-width: 992px) {
+    html[dir="rtl"] body.nav-md .left_col .nav.side-menu > li > a {
+        text-align: right;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col .nav.side-menu > li > a > i {
+        float: none !important;
+        margin: 3px 0 0 10px !important;
+    }
+}
+
+/* At tablet widths nav-md is icon-only; the menu toggle opens nav-sm as an overlay. */
+@media (max-width: 991px) {
+    /* Gentelella hides the whole nav-md sidebar below 991px; restore its icon rail. */
+    body.nav-md .container.body .col-md-3.left_col {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 70px !important;
+    }
+
+    body.nav-md .left_col #sidebar-menu,
+    body.nav-md .left_col #sidebar-menu .menu_section,
+    body.nav-md .left_col #sidebar-menu .nav.side-menu,
+    body.nav-md .left_col #sidebar-menu .nav.side-menu > li {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    body.nav-md .left_col #sidebar-menu .nav.side-menu > li {
+        min-height: 46px;
+    }
+
+    body.nav-md .left_col #sidebar-menu .nav.side-menu > li > a > i {
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #e7edef !important;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col .nav.side-menu > li > a > i {
+        float: none !important;
+        margin: 0 !important;
+    }
+
+    body.nav-sm .container.body .left_col {
+        width: 230px !important;
+        z-index: 2000;
+        box-shadow: 0 0 16px rgba(0, 0, 0, .28);
+    }
+
+    body.nav-sm .container.body .right_col,
+    body.nav-sm .container.body .top_nav,
+    body.nav-sm .container.body footer {
+        margin-left: 70px !important;
+        margin-right: 0 !important;
+    }
+
+    html[dir="rtl"] body.nav-sm .container.body .right_col,
+    html[dir="rtl"] body.nav-sm .container.body .top_nav,
+    html[dir="rtl"] body.nav-sm .container.body footer {
+        margin-left: 0 !important;
+        margin-right: 70px !important;
+    }
+
+    body.nav-sm .container.body .left_col .navbar.nav_title,
+    body.nav-sm .container.body .left_col .profile {
+        display: block !important;
+    }
+
+    body.nav-sm .container.body .left_col .scroll-view {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+    }
+
+    body.nav-sm .left_col .nav.side-menu > li > a {
+        display: block !important;
+        width: auto;
+        overflow: visible;
+        padding: 12px 15px !important;
+        color: #e7edef !important;
+        font-size: 13px !important;
+        text-align: left;
+        white-space: normal;
+    }
+
+    body.nav-sm .left_col .nav.side-menu > li > a > i {
+        display: inline-block;
+        width: 24px !important;
+        margin: 3px 10px 0 0 !important;
+        float: none !important;
+        color: #e7edef !important;
+        font-size: 16px !important;
+    }
+
+    html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a {
+        direction: rtl;
+        text-align: right;
+    }
+
+    html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a > i {
+        float: none !important;
+        margin: 3px 0 0 10px !important;
+    }
+
+    body.nav-sm .left_col .nav.side-menu > li > a > .fa-chevron-down {
+        display: inline-block !important;
+        font-size: 10px !important;
+    }
+
+    body.nav-sm .left_col ul.nav.child_menu {
+        position: static !important;
+        top: auto;
+        left: auto !important;
+        right: auto !important;
+        width: auto !important;
+        padding-left: 0;
+        padding-right: 0;
+        background: transparent;
+        display: none;
+    }
+
+    body.nav-sm .left_col .nav.side-menu > li:hover > ul.nav.child_menu,
+    body.nav-sm .left_col .nav.side-menu > li:focus-within > ul.nav.child_menu,
+    body.nav-sm .left_col .nav.side-menu > li.active > ul.nav.child_menu {
+        display: block !important;
+    }
+
+    html[dir="rtl"] body.nav-sm .left_col ul.nav.child_menu li a {
+        text-align: right !important;
+    }
+
+    body.nav-md .container.body .top_nav .user-profile bdi,
+    body.nav-sm .container.body .top_nav .user-profile bdi {
+        direction: ltr;
+        unicode-bidi: isolate;
+        text-align: start;
+    }
+}
+
+html[dir="rtl"] table th,
+html[dir="rtl"] table td {
+    text-align: start;
+    unicode-bidi: plaintext;
+}
+
+/* Keep the account controls in the requested visual order in Arabic: image, name, caret. */
+html[dir="rtl"] .top_nav .user-profile {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    direction: ltr;
+    gap: 5px;
+}
+
+html[dir="rtl"] .top_nav .user-profile img {
+    order: 0;
+    float: none !important;
+    margin: 0 !important;
+}
+
+html[dir="rtl"] .top_nav .user-profile bdi {
+    order: 1;
+    direction: ltr;
+    unicode-bidi: isolate;
+    text-align: left;
+}
+
+html[dir="rtl"] .top_nav .user-profile::after {
+    order: 2;
+    margin-left: 2px;
+    margin-right: 0;
+}
+
+/* Login credentials are entered in English even when the page chrome is Arabic. */
+html[dir="rtl"] body.loginbody #signup-form input.form-input {
+    direction: ltr;
+    text-align: left;
+}
+
+/* In Arabic, keep the menu toggle by the right sidebar and move account controls to the left. */
+html[dir="rtl"] body.nav-md .container.body .top_nav .nav_menu,
+html[dir="rtl"] body.nav-sm .container.body .top_nav .nav_menu {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    float: none !important;
+    width: 100%;
+}
+
+html[dir="rtl"] body.nav-md .container.body .top_nav .nav_menu > .nav.toggle,
+html[dir="rtl"] body.nav-sm .container.body .top_nav .nav_menu > .nav.toggle {
+    position: static;
+    flex: 0 0 42px;
+    float: none !important;
+    width: 42px;
+    margin: 0 !important;
+    padding: 0;
+    text-align: center;
+}
+
+html[dir="rtl"] body.nav-md .container.body .top_nav .nav_menu > nav.navbar-nav,
+html[dir="rtl"] body.nav-sm .container.body .top_nav .nav_menu > nav.navbar-nav {
+    display: flex !important;
+    flex: 1 1 auto;
+    flex-direction: row;
+    min-width: 0;
+    float: none !important;
+    margin: 0 !important;
+}
+
+html[dir="rtl"] body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right,
+html[dir="rtl"] body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    direction: rtl;
+    gap: 4px;
+    width: 100%;
+    float: none !important;
+    margin: 0 !important;
+}
+
+html[dir="rtl"] body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right > li,
+html[dir="rtl"] body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right > li {
+    display: block;
+    flex: 0 0 auto;
+    float: none !important;
+}
+
+html[dir="rtl"] body.nav-md .container.body .top_nav .user-profile,
+html[dir="rtl"] body.nav-sm .container.body .top_nav .user-profile {
+    gap: 8px;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+}
+
+/* In English, keep the language toggle just before the account picture. */
+html[dir="ltr"] body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right,
+html[dir="ltr"] body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: row;
+    gap: 8px;
+    float: none !important;
+    margin: 0 !important;
+}
+
+html[dir="ltr"] body.nav-md .container.body .top_nav nav.navbar-nav > ul.navbar-right > li,
+html[dir="ltr"] body.nav-sm .container.body .top_nav nav.navbar-nav > ul.navbar-right > li {
+    float: none !important;
+}
+
+html[dir="ltr"] body.nav-md .container.body .top_nav .language-switcher,
+html[dir="ltr"] body.nav-sm .container.body .top_nav .language-switcher {
+    margin-right: 2px;
+}
+
+/* Center Arabic icons inside the narrow right-side rail. */
+@media (max-width: 991px) {
+    html[dir="rtl"] body.nav-md .left_col .nav.side-menu > li > a,
+    html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a {
+        position: relative;
+        min-height: 46px;
+        padding: 12px 0 !important;
+    }
+
+    html[dir="rtl"] body.nav-md .left_col .nav.side-menu > li > a > i,
+    html[dir="rtl"] body.nav-sm .left_col .nav.side-menu > li > a > i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 26px !important;
+        margin: 0 !important;
+    }
+}

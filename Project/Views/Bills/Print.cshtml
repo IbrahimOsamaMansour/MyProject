@@ -1,0 +1,256 @@
+@model Project.Models.Bill
+@using System.Globalization
+
+@{
+    Layout = null;
+    var isArabic = CultureInfo.CurrentUICulture.Name.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
+    var totalPaid = Model.PayedQuantities?.Sum(payment => (decimal)payment.value) ?? 0m;
+    var lineItemsTotal = Model.Product_Bills?.Sum(item => (decimal)(item.unit_Price ?? 0d) * (item.Quantity ?? 0)) ?? 0m;
+    var total = Model.Total_Price.HasValue ? (decimal)Model.Total_Price.Value : lineItemsTotal;
+    var balance = Math.Max(0m, total - totalPaid);
+    var currencyCulture = CultureInfo.GetCultureInfo("en-US");
+    var seller = ViewBag.InvoiceProfileSettings as Project.Models.InvoiceProfileSettings ?? new Project.Models.InvoiceProfileSettings();
+    var sellerName = isArabic ? seller.DisplayNameAr : seller.DisplayNameEn;
+    var businessName = isArabic ? seller.BusinessNameAr : seller.BusinessNameEn;
+    var sellerSubtitle = isArabic ? seller.SubtitleAr : seller.SubtitleEn;
+    var sellerAddress = isArabic ? seller.AddressAr : seller.AddressEn;
+}
+<!DOCTYPE html>
+<html lang="@(isArabic ? "ar" : "en")" dir="@(isArabic ? "rtl" : "ltr")">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@(isArabic ? "فاتورة" : "Invoice") @Model.Bill_Num</title>
+    <style>
+        :root { color-scheme: light; font-family: "Segoe UI", Tahoma, Arial, sans-serif; color: #243447; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #eef1f5; }
+        .toolbar { max-width: 210mm; margin: 20px auto 12px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+        .print-button { border: 0; border-radius: 6px; padding: 11px 18px; color: #fff; background: #168da3; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .invoice { width: min(210mm, calc(100% - 32px)); min-height: 250mm; margin: 0 auto 24px; padding: 17mm; background: #fff; box-shadow: 0 8px 28px rgba(29, 45, 62, .12); }
+        .invoice-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding-bottom: 22px; border-bottom: 3px solid #168da3; }
+        .brand { margin: 0 0 6px; color: #263e53; font-size: 25px; font-weight: 750; }
+        .brand-subtitle, .muted { color: #708093; }
+        .company-subtitle { margin: 4px 0; color: #708093; font-size: 12px; }
+        .invoice-label { margin: 0 0 8px; color: #168da3; font-size: 27px; font-weight: 700; }
+        .invoice-number { font-size: 15px; font-weight: 650; }
+        .invoice-header .invoice-date { text-align: end; }
+        .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 24px 0; }
+        .meta h2 { margin: 0 0 10px; color: #738396; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }
+        .meta p { margin: 4px 0; line-height: 1.55; }
+        .meta .invoice-date { text-align: end; }
+        .company-details { color: #66778a; font-size: 13px; line-height: 1.55; }
+        table { width: 100%; border-collapse: collapse; }
+        thead th { padding: 12px 10px; color: #fff; background: #2b4359; text-align: start; font-size: 13px; }
+        tbody td { padding: 13px 10px; border-bottom: 1px solid #e4e9ee; vertical-align: top; }
+        .number { text-align: end; white-space: nowrap; }
+        .product-name { font-weight: 650; }
+        .item-subtitle { margin-top: 4px; color: #738396; font-size: 11px; line-height: 1.45; }
+        .totals { width: min(100%, 390px); margin: 22px 0 0 auto; }
+        .totals td { padding: 9px 10px; border-bottom: 1px solid #e7ebef; }
+        .totals tr:last-child td { border-top: 2px solid #168da3; border-bottom: 0; font-size: 17px; font-weight: 750; }
+        .payments { margin-top: 30px; }
+        .section-title { margin: 0 0 10px; color: #263e53; font-size: 15px; }
+        .payments th { color: #263e53; background: #eef2f6; }
+        .payment-empty { color: #738396; text-align: center; }
+        .note { margin-top: 28px; padding: 14px 16px; border: 1px solid #e4e9ee; border-radius: 5px; color: #56677a; }
+        .note-label { font-weight: 700; }
+        .thanks { margin-top: 34px; padding-top: 16px; border-top: 1px solid #e4e9ee; color: #708093; text-align: center; }
+        @@page { size: A4; margin: 0; }
+        @@media (max-width: 640px) {
+            .toolbar { width: calc(100% - 20px); margin: 10px auto; }
+            .invoice { width: calc(100% - 20px); min-height: 0; padding: 22px 16px; }
+            .invoice-header { gap: 12px; }
+            .brand { font-size: 20px; }
+            .invoice-label { font-size: 22px; }
+            .meta { gap: 16px; }
+            thead th, tbody td { padding: 9px 6px; font-size: 12px; }
+            .company-details { font-size: 11px; }
+        }
+        @@media print {
+            body { background: #fff; }
+            .toolbar { display: none !important; }
+            .invoice { width: auto; min-height: 0; margin: 0; padding: 15mm; box-shadow: none; }
+            thead { display: table-header-group; }
+            tr, .meta, .totals, .note { break-inside: avoid; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button class="print-button" type="button" onclick="window.print()">
+            @(isArabic ? "طباعة / حفظ PDF" : "Print / Save as PDF")
+        </button>
+    </div>
+    <form id="autoPdfForm" method="post" action="@Url.Action("GeneratePdf", "Bills", new { id = Model.ID })" hidden>
+        @Html.AntiForgeryToken()
+    </form>
+
+    <main class="invoice">
+        <header class="invoice-header">
+            <div>
+                <p class="brand">@sellerName</p>
+                <div class="company-details">
+                    <strong>@businessName</strong><br />
+                    @if (!string.IsNullOrWhiteSpace(sellerSubtitle))
+                    {
+                        <span class="company-subtitle">@sellerSubtitle</span><br />
+                    }
+                    @foreach (var addressLine in (sellerAddress ?? string.Empty).Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        @addressLine<br />
+                    }
+                    @if (!string.IsNullOrWhiteSpace(seller.Phone))
+                    {
+                        <span>@(isArabic ? "الهاتف" : "Phone"): @seller.Phone</span><br />
+                    }
+                    @if (!string.IsNullOrWhiteSpace(seller.Email))
+                    {
+                        <span>@(isArabic ? "البريد الإلكتروني" : "Email"): @seller.Email</span>
+                    }
+                </div>
+            </div>
+            <div class="invoice-date">
+                <h1 class="invoice-label">@(isArabic ? "فاتورة مبيعات" : "SALES INVOICE")</h1>
+                <div class="invoice-number">#@Model.Bill_Num</div>
+            </div>
+        </header>
+
+        <section class="meta">
+            <div>
+                <h2>@(isArabic ? "بيانات العميل" : "Bill To")</h2>
+                <p><strong>@Model.Client_Name</strong></p>
+                @if (!string.IsNullOrWhiteSpace(Model.Client_phone))
+                {
+                    <p>@(isArabic ? "الهاتف" : "Phone"): @Model.Client_phone</p>
+                }
+            </div>
+            <div>
+                <h2>@(isArabic ? "بيانات الفاتورة" : "Invoice Details")</h2>
+                <p>@(isArabic ? "تاريخ الإصدار" : "Issue date"): @Model.Date.ToString("dd MMM yyyy", currencyCulture)</p>
+                @if (Model.Exp_Date.HasValue)
+                {
+                    <p>@(isArabic ? "تاريخ الاستحقاق" : "Due date"): @Model.Exp_Date.Value.ToString("dd MMM yyyy", currencyCulture)</p>
+                }
+            </div>
+        </section>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>@(isArabic ? "المنتج" : "Product")</th>
+                    <th>@(isArabic ? "الكمية" : "Quantity")</th>
+                    <th class="number">@(isArabic ? "سعر الوحدة" : "Unit price")</th>
+                    <th class="number">@(isArabic ? "الإجمالي" : "Amount")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Product_Bills != null && Model.Product_Bills.Count > 0)
+                {
+                    foreach (var item in Model.Product_Bills)
+                    {
+                        var lineTotal = (decimal)(item.unit_Price ?? 0d) * (item.Quantity ?? 0);
+                        <tr>
+                            <td>
+                                <div class="product-name">@(item.product?.ModelName ?? "—")</div>
+                                <div class="item-subtitle">
+                                    @(isArabic ? "الحالة" : "Status"):
+                                    @(item.Resv_Q_State ? (isArabic ? "تم التسليم" : "Delivered") : (isArabic ? "محجوز" : "Reserved"))
+                                    @if (item.Book_Date.HasValue)
+                                    {
+                                        <span> · @(isArabic ? "الحجز" : "Booked"): @item.Book_Date.Value.ToString("dd MMM yyyy", currencyCulture)</span>
+                                    }
+                                    @if (item.Sell_Date.HasValue)
+                                    {
+                                        <span> · @(isArabic ? "التسليم" : "Delivered"): @item.Sell_Date.Value.ToString("dd MMM yyyy", currencyCulture)</span>
+                                    }
+                                </div>
+                            </td>
+                            <td>@item.Quantity @item.unit_Quantity</td>
+                            <td class="number">@(((decimal)(item.unit_Price ?? 0d)).ToString("N2", currencyCulture)) LE</td>
+                            <td class="number">@lineTotal.ToString("N2", currencyCulture) LE</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="4">@(isArabic ? "لا توجد منتجات في هذه الفاتورة." : "There are no products on this invoice.")</td></tr>
+                }
+            </tbody>
+        </table>
+
+        <section class="payments">
+            <h2 class="section-title">@(isArabic ? "سجل المدفوعات" : "Payment history")</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>@(isArabic ? "تاريخ الدفع" : "Payment date")</th>
+                        <th class="number">@(isArabic ? "المبلغ" : "Amount")</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.PayedQuantities != null && Model.PayedQuantities.Count > 0)
+                    {
+                        foreach (var payment in Model.PayedQuantities.OrderBy(p => p.Date_Payed))
+                        {
+                            <tr>
+                                <td>@payment.Date_Payed.ToString("dd MMM yyyy, hh:mm tt", currencyCulture)</td>
+                                <td class="number">@(((decimal)payment.value).ToString("N2", currencyCulture)) LE</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr><td colspan="2" class="payment-empty">@(isArabic ? "لا توجد مدفوعات مسجلة." : "No payments recorded.")</td></tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+
+        <table class="totals">
+            <tbody>
+                <tr>
+                    <td>@(isArabic ? "إجمالي الفاتورة" : "Invoice total")</td>
+                    <td class="number">@total.ToString("N2", currencyCulture) LE</td>
+                </tr>
+                <tr>
+                    <td>@(isArabic ? "إجمالي المدفوع" : "Amount paid")</td>
+                    <td class="number">@totalPaid.ToString("N2", currencyCulture) LE</td>
+                </tr>
+                <tr>
+                    <td>@(isArabic ? "المبلغ المتبقي" : "Balance due")</td>
+                    <td class="number">@balance.ToString("N2", currencyCulture) LE</td>
+                </tr>
+            </tbody>
+        </table>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Note))
+        {
+            <div class="note"><span class="note-label">@(isArabic ? "ملاحظات:" : "Notes:")</span> @Model.Note</div>
+        }
+
+        <footer class="thanks">@(isArabic ? "شكرًا لثقتكم بنا" : "Thank you for your business.")</footer>
+    </main>
+    <script>
+        (() => {
+            const form = document.getElementById('autoPdfForm');
+            const token = form.querySelector('input[name="__RequestVerificationToken"]').value;
+            const snapshot = document.documentElement.cloneNode(true);
+            snapshot.querySelectorAll('script').forEach(script => script.remove());
+            snapshot.querySelector('#autoPdfForm')?.remove();
+            const data = new FormData();
+            data.append('html', '<!DOCTYPE html>\n' + snapshot.outerHTML);
+            data.append('__RequestVerificationToken', token);
+            status.hidden = false;
+            fetch(form.action, { method: 'POST', body: data, credentials: 'same-origin' })
+                .then(async response => {
+                    if (!response.ok) throw new Error('PDF generation failed.');
+                })
+                .catch(error => {
+                    console.error('Automatic invoice PDF generation failed:', error);
+                });
+        })();
+    </script>
+</body>
+</html>

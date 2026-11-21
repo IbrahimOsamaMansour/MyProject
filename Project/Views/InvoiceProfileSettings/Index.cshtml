@@ -1,0 +1,96 @@
+@model Project.Models.InvoiceProfileSettings
+@{
+    ViewData["Title"] = "Invoice Details Settings";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+    var saved = TempData["InvoiceProfileSettingsSaved"] != null;
+}
+
+<div class="page-title">
+    <div class="title_left"><h3>Invoice Details Settings <small>إعدادات بيانات الفاتورة</small></h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+            <div class="x_title"><h2>Seller information <small>بيانات المنشأة الظاهرة على الفاتورة</small></h2><div class="clearfix"></div></div>
+            <div class="x_content">
+                @if (saved)
+                {
+                    <div class="alert alert-success" role="status">Invoice details saved. تم حفظ بيانات الفاتورة.</div>
+                }
+                <p class="text-muted">Edit the Arabic and English values here. They appear in invoice details and printed PDFs without changing or redeploying application files.</p>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <form asp-action="Index" method="post">
+                    @Html.AntiForgeryToken()
+                    <input asp-for="Id" type="hidden" />
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>English</h4>
+                            <div class="form-group">
+                                <label asp-for="DisplayNameEn">Invoice heading / brand</label>
+                                <input asp-for="DisplayNameEn" class="form-control" />
+                                <span asp-validation-for="DisplayNameEn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BusinessNameEn">Business name</label>
+                                <input asp-for="BusinessNameEn" class="form-control" />
+                                <span asp-validation-for="BusinessNameEn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SubtitleEn">Invoice subtitle</label>
+                                <input asp-for="SubtitleEn" class="form-control" />
+                                <span asp-validation-for="SubtitleEn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AddressEn">Address (use a new line for each line)</label>
+                                <textarea asp-for="AddressEn" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="AddressEn" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6" dir="rtl">
+                            <h4>العربية</h4>
+                            <div class="form-group">
+                                <label asp-for="DisplayNameAr">عنوان الفاتورة / اسم العلامة التجارية</label>
+                                <input asp-for="DisplayNameAr" class="form-control" />
+                                <span asp-validation-for="DisplayNameAr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BusinessNameAr">اسم المنشأة</label>
+                                <input asp-for="BusinessNameAr" class="form-control" />
+                                <span asp-validation-for="BusinessNameAr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SubtitleAr">الوصف الظاهر أعلى الفاتورة</label>
+                                <input asp-for="SubtitleAr" class="form-control" />
+                                <span asp-validation-for="SubtitleAr" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="AddressAr">العنوان (كل سطر في سطر منفصل)</label>
+                                <textarea asp-for="AddressAr" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="AddressAr" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Phone">Phone / الهاتف</label>
+                            <input asp-for="Phone" class="form-control" dir="ltr" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Email">Email / البريد الإلكتروني</label>
+                            <input asp-for="Email" class="form-control" dir="ltr" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save settings / حفظ الإعدادات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

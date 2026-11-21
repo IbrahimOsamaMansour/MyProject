@@ -1,5 +1,9 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+@* Culture is resolved from the request localization cookie. *@
+@{
+    var isArabic = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
+}
+<html lang="@(isArabic ? "ar" : "en")" dir="@(isArabic ? "rtl" : "ltr")">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <!-- Meta, title, CSS, favicons, etc. -->
@@ -52,6 +56,8 @@
     <!-- Custom Theme Style -->
     <link href="~/CustomLayout/build/css/custom.min.css" rel="stylesheet">
     <link href="~/css/ProjectStyle.css" rel="stylesheet">
+    <link href="~/css/rtl.css" rel="stylesheet" asp-append-version="true" />
+    <link href="~/css/responsive.css" rel="stylesheet" asp-append-version="true" />
   </head>
 
   <body class="nav-md">
@@ -60,7 +66,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="#" class="site_title"><span>Ceramica ElQaser!</span></a>
+              <a href="#" class="site_title"><span dir="ltr">Marble ElQaser!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -72,7 +78,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>@User.Identity.Name             </h2>
+                <h2><bdi>@User.Identity.Name</bdi></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -110,9 +116,25 @@
               </div>
               <nav class="nav navbar-nav">
               <ul class=" navbar-right">
-                <li class="nav-item dropdown open" style="padding-left: 15px;">
+                <li class="language-switcher" style="padding: 10px 12px;">
+                    <form asp-controller="Language" asp-action="SetLanguage" method="post" class="language-form">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                        <div class="language-toggle" role="group" aria-label="Language">
+                            <button type="submit" name="culture" value="en-US"
+                                    class="language-toggle-option @(!isArabic ? "is-active" : "")"
+                                    aria-label="@(isArabic ? "Switch to English" : "English is selected")"
+                                    aria-pressed="@(!isArabic)">EN</button>
+                            <button type="submit" name="culture" value="ar-EG"
+                                    class="language-toggle-option @(isArabic ? "is-active" : "")"
+                                    aria-label="@(!isArabic ? "Switch to Arabic" : "Arabic is selected")"
+                                    aria-pressed="@isArabic">عربي</button>
+                        </div>
+                    </form>
+                </li>
+                <li class="nav-item dropdown" style="padding-left: 15px;">
                   <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/CustomLayout/images/img.jpg" alt="">@User.Identity.Name
+                                    <img src="~/CustomLayout/images/img.jpg" alt=""><bdi>@User.Identity.Name</bdi>
                                 </a>
                   <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item"  href="javascript:;"> Profile</a>
@@ -220,6 +242,8 @@
       <!-- Custom Theme Scripts -->
   @*  <script src="~/CustomLayout/build/js/custom.js"></script>*@
     <script src="~/CustomLayout/build/js/custom.min.js"></script>
+    <script src="~/js/ui-localization.js" asp-append-version="true"></script>
+    <script src="~/js/responsive-tables.js" asp-append-version="true"></script>
    
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

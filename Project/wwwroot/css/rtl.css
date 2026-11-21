@@ -1,0 +1,156 @@
+html[dir="rtl"] body {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] body.nav-md .container.body .left_col {
+    left: auto;
+    right: 0;
+}
+
+html[dir="rtl"] body.nav-md .container.body .right_col,
+html[dir="rtl"] body.nav-md .container.body .top_nav,
+html[dir="rtl"] body.nav-md .container.body footer {
+    margin-left: 0;
+    margin-right: 230px;
+}
+
+html[dir="rtl"] body.nav-sm .container.body .left_col {
+    left: auto;
+    right: 0;
+}
+
+html[dir="rtl"] body.nav-sm .container.body .right_col,
+html[dir="rtl"] body.nav-sm .container.body .top_nav,
+html[dir="rtl"] body.nav-sm .container.body footer {
+    margin-left: 0;
+    margin-right: 70px;
+}
+
+html[dir="rtl"] .nav.side-menu > li > a {
+    text-align: right;
+}
+
+html[dir="rtl"] .nav.side-menu > li > a > i {
+    margin-right: 0;
+    margin-left: 10px;
+}
+
+html[dir="rtl"] .nav.side-menu > li > a > .fa-chevron-down {
+    float: left;
+}
+
+html[dir="rtl"] .navbar-right {
+    float: left !important;
+    margin-left: 0;
+    margin-right: auto;
+}
+
+html[dir="rtl"] .top_nav .nav.toggle {
+    float: right !important;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+html[dir="rtl"] .top_nav .nav_menu {
+    direction: rtl;
+}
+
+html[dir="rtl"] .top_nav .user-profile {
+    direction: rtl;
+    white-space: nowrap;
+}
+
+html[dir="rtl"] .top_nav .user-profile img {
+    float: right;
+    margin-right: 0;
+    margin-left: 5px;
+}
+
+html[dir="rtl"] .left_col .profile_pic,
+html[dir="rtl"] .left_col .profile_info {
+    float: right !important;
+}
+
+html[dir="rtl"] .left_col .profile_pic {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+html[dir="rtl"] .left_col .profile_info {
+    text-align: right;
+}
+
+html[dir="rtl"] .left_col .site_title {
+    direction: ltr;
+    text-align: right;
+}
+
+html[dir="rtl"] .pull-right {
+    float: left !important;
+}
+
+html[dir="rtl"] .pull-left {
+    float: right !important;
+}
+
+html[dir="rtl"] .language-switcher {
+    float: right;
+}
+
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select {
+    text-align: right;
+}
+
+/* Add breathing room to the Arabic sidebar without changing the English layout. */
+html[dir="rtl"] .left_col .navbar.nav_title {
+    box-sizing: border-box;
+    padding-right: 14px;
+    padding-left: 8px;
+}
+
+html[dir="rtl"] .left_col .site_title {
+    font-size: 21px;
+    font-weight: 600;
+}
+
+html[dir="rtl"] .left_col .profile {
+    box-sizing: border-box;
+    padding-right: 12px;
+    padding-left: 8px;
+}
+
+html[dir="rtl"] .left_col .profile_info span {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+html[dir="rtl"] .left_col .profile_info h2 {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+html[dir="rtl"] .left_col .nav.side-menu > li > a {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+html[dir="rtl"] table th,
+html[dir="rtl"] table td {
+    text-align: right;
+}
+
+.language-switcher-simple {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    z-index: 10;
+    width: auto;
+}
+
+html[dir="rtl"] .language-switcher-simple {
+    right: auto;
+    left: 16px;
+}

@@ -1,14 +1,43 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+@* Culture is resolved from the request localization cookie. *@
+@{
+    var isArabic = System.Globalization.CultureInfo.CurrentUICulture.Name.StartsWith("ar", StringComparison.OrdinalIgnoreCase);
+}
+<html lang="@(isArabic ? "ar" : "en")" dir="@(isArabic ? "rtl" : "ltr")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Project</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @if (isArabic)
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.rtl.min.css" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    }
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Project.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/rtl.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
 </head>
 <body>
+    <div class="language-switcher-simple">
+        <form asp-controller="Language" asp-action="SetLanguage" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+            <div class="language-toggle" role="group" aria-label="Language">
+                <button type="submit" name="culture" value="en-US"
+                        class="language-toggle-option @(!isArabic ? "is-active" : "")"
+                        aria-label="@(isArabic ? "Switch to English" : "English is selected")"
+                        aria-pressed="@(!isArabic)">EN</button>
+                <button type="submit" name="culture" value="ar-EG"
+                        class="language-toggle-option @(isArabic ? "is-active" : "")"
+                        aria-label="@(!isArabic ? "Switch to Arabic" : "Arabic is selected")"
+                        aria-pressed="@isArabic">عربي</button>
+            </div>
+        </form>
+    </div>
  
 
     @Html.Partial("_navLayout")
@@ -26,6 +55,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/ui-localization.js" asp-append-version="true"></script>
+    <script src="~/js/responsive-tables.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

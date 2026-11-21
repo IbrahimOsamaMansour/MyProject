@@ -5,7 +5,7 @@
     Layout = null;
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
     <head>
         <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,16 +13,18 @@
     <title>Log IN</title>
     <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css">
      <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/rtl.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true">
     </head>
-    <body style="padding:5px; margin:0;" class="loginbody">
+    <body class="loginbody">
 
     <div class="gradient-custom-3" style="margin:0;">
         <div style="padding:1px" ></div>
             <div class="main">
                 <section class="signup">
                     <div class="container ">
-                    <div class="signup-content text-center" style="padding: 30px 80px;  height:85%; width: 60%; margin-top:20px;margin-left:8%;">
-                        <form id="signup-form" class="signup-form" asp-action="Login" style="padding-top:15%;">
+                    <div class="signup-content text-center">
+                        <form id="signup-form" class="signup-form" asp-action="Login">
                                 <div asp-validation-summary="All" style="color:red" class="text-danger"></div>
                             <h2 class="form-title">LOGIN</h2>
                                 <div class="form-group">
@@ -56,6 +58,7 @@
 
         <script src="~/vendor/jquery/jquery.min.js"></script>
         <script src="~/js/main.js"></script>
+        <script src="~/js/ui-localization.js" asp-append-version="true"></script>
 
     @section Scripts {
         @{

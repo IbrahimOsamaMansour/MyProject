@@ -23,6 +23,7 @@ namespace Project.Models
         public DbSet<Category> Category { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Company_Phone> Company_Phone { get; set; }
+        public DbSet<InvoiceProfileSettings> InvoiceProfileSettings { get; set; } = null!;
         public DbSet<Payed_quantity> payed_Quantity { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<Product_Bill> Product_Bill { get; set; }
@@ -33,6 +34,14 @@ namespace Project.Models
 
         //==========================   11/26
         public DbSet<Workers> workers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<InvoiceProfileSettings>()
+                .Property(settings => settings.Id)
+                .ValueGeneratedNever();
+        }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

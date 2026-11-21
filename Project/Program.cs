@@ -2,15 +2,34 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 using Project.Models;
 using Project.Repository;
 using Project.Services;
+using Project.Logging;
+using Project.Middleware;
+using Project.Filters;
 using Purchasing = Project.Models.Purchasing;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddProvider(new DailyFileLoggerProvider(builder.Environment.ContentRootPath));
+
+var supportedCultures = new[] { new CultureInfo("en-US"), new CultureInfo("ar-EG") };
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+    options.RequestCultureProviders = new IRequestCultureProvider[]
+    {
+        new CookieRequestCultureProvider()
+    };
+});
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options => options.Filters.AddService<WriteOperationLoggingFilter>());
+builder.Services.AddScoped<WriteOperationLoggingFilter>();
 //builder.Services.AddDbContext<ElQasrDbContext>(option =>
 //                {
 //                    option.UseSqlServer(builder.Configuration.GetConnectionString("myDB"));
@@ -52,6 +71,8 @@ builder.Services.AddScoped<IEmpSalaryRepo, EmpSalaryRepo>();
 
 var app = builder.Build();
 
+app.UseRequestLocalization();
+
 // Configure t he HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -61,6 +82,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication();// to make filter authorize check cookie
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseAuthorization();
 
 app.MapControllerRoute(
